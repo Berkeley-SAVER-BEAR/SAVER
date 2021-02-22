@@ -2,13 +2,13 @@ class Drive:
     def __init__(self):
         pass
 
-    def left(self, deg, mag):
+    def left(self, deg):
         pass
 
-    def right(self, deg, mag):
+    def right(self, deg):
         pass
 
-    def forward(self, mag):
+    def forwardBackward(self, mag):
         pass
 
     def stop(self):
