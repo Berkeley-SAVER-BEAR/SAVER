@@ -1,6 +1,5 @@
 
 class SpeedController:
-    thrustToPWM = {}
 
     def __init__(self):
         self.thrustToPWM = {-10:1100, -9:1140, -8:1180, -7:1220, -6:1260, -5:1300, -4:1340, -3:1380, -2:1420, -1:1460, 
