@@ -1,2 +1,0 @@
-class KerberosSDR:
-    pass
