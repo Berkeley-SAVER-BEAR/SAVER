@@ -1,7 +1,7 @@
-from models import Drive, KerberosSdr, Imu, Arduino
+from models import Drive, KerberosDR, Imu, Arduino
 
 class Robot:
-    def __init__(self, drive: Drive, radio: KerberosSdr, imu: Imu, arduino: Arduino):
+    def __init__(self, drive: Drive, radio: KerberosSDR, imu: Imu, arduino: Arduino):
         self.drive = drive
         self.radio = radio
         self.imu = imu

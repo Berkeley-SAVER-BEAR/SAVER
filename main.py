@@ -1,5 +1,5 @@
 from robot import Robot
-from models import Arduino, Drive, Imu, KerberosSdr, SpeedController
+from models import Arduino, Drive, Imu, KerberosSDR, SpeedController
 from constants import *
 import time
 
