@@ -9,7 +9,8 @@ class SpeedController:
     MAX_FORWARD = 2.71
     MAX_BACKWARDS = 2.90
 
-    def getPWM(self, level):
+
+    def getPWM(self, level): # level is between -1 to 1 where < 0 means backwards and > 0 means forward.
         # Gets the PWM
         if level < -1 or level > 1:
             return "Incorrect input"
