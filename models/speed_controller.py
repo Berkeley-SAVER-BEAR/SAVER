@@ -1,6 +1,10 @@
 from .arduino import Arduino
 class SpeedController:
 
+    def __init__(self, arduino: Arduino, port: int):
+        self.arduino = arduino
+        self.port = port
+
     # gets and return the PWM based on inputs between -1 and 1
     MAX_FORWARD = 2.71
     MAX_BACKWARDS = 2.90
