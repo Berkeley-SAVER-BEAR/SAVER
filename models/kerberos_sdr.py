@@ -4,10 +4,10 @@ from time import time
 class KerberosSDR:
 
     # For testing
-    latest_DOA_timestamp = None
+    _latest_DOA_timestamp = None
     
     # Cache last DOA value
-    latest_DOA = None
+    _latest_DOA = None
 
     ##########################################################
     # PRIVATE VARIABLES AND FUNCTIONS
@@ -73,16 +73,16 @@ class KerberosSDR:
         """
 
         # For testing, mimic 1 second buffer between DOA changes by returning cached value until at least a second lapses
-        if(int(time()) == self.latest_DOA_timestamp):
-            return self.latest_DOA
+        if(int(time()) == self._latest_DOA_timestamp):
+            return self._latest_DOA
         
         # Set latest timestamp to current seconds in UNIX time
-        self.latest_DOA_timestamp = int(time())
+        self._latest_DOA_timestamp = int(time())
 
         # TODO: Return something more useful with alternate parameters
         if(True or type == "random"):
-            self.latest_DOA = randrange(0,360,1)
-            return self.latest_DOA
+            self._latest_DOA = randrange(0,360,1)
+            return self._latest_DOA
 
     
 
