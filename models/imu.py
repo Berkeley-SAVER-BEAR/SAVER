@@ -14,7 +14,7 @@ class Imu:
         return self.sensor.acceleration
 
     def get_gyro(self):
-        """"Returns 3-tuple of X, Y, Z axis gyroscope values in degrees/s."""
+        """"Returns 3-tuple of X, Y, Z axis gyroscope values in rad/s."""
         return self.sensor.gyro
 
     def get_euler_angles(self):
