@@ -20,7 +20,7 @@ class SpeedController:
             return "Incorrect input"
 
         if level == 0:
-            return 1500.00
+            return 1500
         elif level > 0:
             return self.thrustToPWM(level * self.MAX_FORWARD) 
         elif level < 0:
