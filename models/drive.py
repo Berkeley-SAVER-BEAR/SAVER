@@ -1,4 +1,4 @@
-from . import SpeedController
+from .speed_controller import SpeedController
 
 class Drive:
     def __init__(self, left_thruster: SpeedController, right_thruster: SpeedController):
