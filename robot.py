@@ -1,10 +1,9 @@
-from models import Drive, KerberosDR, Imu, Arduino
+from models import Drive, KerberosSDR, Imu, Arduino
 
 class Robot:
-    def __init__(self, drive: Drive, radio: KerberosSDR, imu: Imu, arduino: Arduino):
+    def __init__(self, drive: Drive, radio: KerberosSDR, arduino: Arduino):
         self.drive = drive
         self.radio = radio
-        self.imu = imu
         self.arduino = arduino
 
     def run(self, method="simple_drive"):
@@ -17,7 +16,7 @@ class Robot:
         turns slightly when at an acute angle, 
         and runs straight when within 15 degrees"""
         
-        doa = radio.get_DOA()
+        doa = self.radio.get_DOA()
         doa -= (doa // 180) * 360 # get it into -180 to 180
 
         if doa < -90:

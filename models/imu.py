@@ -5,6 +5,7 @@ import adafruit_bno055 as IMU
 
 
 class Imu:
+    
     def __init__(self):
         i2c = busio.I2C(board.SCL, board.SDA)
         self.sensor = IMU.BNO055_I2C(i2c)

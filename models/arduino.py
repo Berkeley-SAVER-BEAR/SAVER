@@ -11,7 +11,7 @@ class Arduino:
     def update(self):
         """call this in the robot loop to receive signals"""
         
-        line = ser.readline()
+        line = self.ser.readline()
         if line:
             line = line.decode('utf-8').rstrip()
             for callback, condition in self.listeners.items():

@@ -8,10 +8,10 @@ def initialize():
     left_thruster = SpeedController(arduino, LEFT_THRUSTER_PORT)
     right_thruster = SpeedController(arduino, RIGHT_THRUSTER_PORT)
     drive = Drive(left_thruster, right_thruster)
-    imu = Imu()
-    radio = Radio()
+    #imu = Imu()
+    radio = KerberosSDR()
 
-    return arduino, left_thruster, right_thruster, drive, imu, radio
+    return drive, radio, arduino
 
 def main():
     models = initialize()
