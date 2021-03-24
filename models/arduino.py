@@ -20,6 +20,7 @@ class Arduino:
 
     def send(self, msg: str):
         """Sends a string to the Arduino"""
+        print(msg)
         self.ser.write((msg + "\n").encode('utf-8'))
 
     def subscribe(self, callback: Callable[[str], None], condition: Callable[[str], bool] = lambda x: True):
