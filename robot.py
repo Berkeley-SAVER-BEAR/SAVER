@@ -7,7 +7,7 @@ class Robot:
         self.arduino = arduino
 
     def run(self, method="simple_drive"):
-        self.arduino.update()
+        #self.arduino.update()
 
         getattr(self, method)()
 
