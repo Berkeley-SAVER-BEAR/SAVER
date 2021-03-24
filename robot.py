@@ -1,4 +1,4 @@
-from models import Drive, KerberosSDR, Imu, Arduino
+from models import Drive, KerberosSDR, Arduino
 
 class Robot:
     def __init__(self, drive: Drive, radio: KerberosSDR, arduino: Arduino):
