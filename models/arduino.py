@@ -13,7 +13,7 @@ class Arduino:
         
         line = self.ser.readline()
         if line:
-            line = line.encode('utf-8').rstrip()
+            line = line.decode('utf-8').rstrip()
             for callback, condition in self.listeners.items():
                 if condition(line):
                     callback(line)
