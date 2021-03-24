@@ -10,6 +10,10 @@ class SpeedController:
     MAX_BACKWARDS = 2.90
 
 
+    def set_speed(self, speed: float):
+        """Runs the thruster at a specified speed between 1 (full speed forward) and -1 (full speed backward)"""
+        self.arduino.send("ESC Port: {0}, PWM: {1}".format(self.port, self.getPWM(speed)))
+
     def getPWM(self, level): # level is between -1 to 1 where < 0 means backwards and > 0 means forward.
         # Gets the PWM
         if level < -1 or level > 1:
