@@ -20,7 +20,6 @@ class Arduino:
 
     def send(self, msg: str):
         """Sends a string to the Arduino"""
-        print(msg)
         self.ser.write((msg + "\n").encode('utf-8'))
         line = self.ser.readline().decode('utf-8').rstrip()
         print(line)
