@@ -22,6 +22,8 @@ class Arduino:
         """Sends a string to the Arduino"""
         print(msg)
         self.ser.write((msg + "\n").encode('utf-8'))
+        line = self.ser.readline().decode('utf-8').rstrip()
+        print(line)
 
     def subscribe(self, callback: Callable[[str], None], condition: Callable[[str], bool] = lambda x: True):
         """Subscribe to messages from the Arduino. Optionally provide a condition in order to call the callback."""
