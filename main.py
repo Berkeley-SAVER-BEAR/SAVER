@@ -17,11 +17,14 @@ def main():
     models = initialize()
 
     robot = Robot(*models)
+    
+    #delay
+    #time.sleep(2)
 
     while True:
         robot.run()
-        time.sleep(1 / CYCLES_PER_SECOND)
-        #time.sleep(2)
+        #time.sleep(1 / CYCLES_PER_SECOND)
+        time.sleep(3)
 
 if __name__ == "__main__":
     main()

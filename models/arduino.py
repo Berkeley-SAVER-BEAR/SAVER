@@ -1,6 +1,6 @@
 from constants import *
 from typing import Callable
-import serial 
+import serial, time 
 
 class Arduino:
     def __init__(self):
@@ -21,8 +21,10 @@ class Arduino:
     def send(self, msg: str):
         """Sends a string to the Arduino"""
         self.ser.write((msg + "\n").encode('utf-8'))
-        line = self.ser.readline().decode('utf-8').rstrip()
-        print(line)
+        time.sleep(.5)
+        print("MSG: ", msg)
+        print("Decode: " , self.ser.readline().decode('utf-8'), "\n\n")
+        
 
     def subscribe(self, callback: Callable[[str], None], condition: Callable[[str], bool] = lambda x: True):
         """Subscribe to messages from the Arduino. Optionally provide a condition in order to call the callback."""

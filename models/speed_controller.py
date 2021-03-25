@@ -16,6 +16,9 @@ class SpeedController:
 
     def getPWM(self, level): # level is between -1 to 1 where < 0 means backwards and > 0 means forward.
         # Gets the PWM
+        
+        level *= .1
+
         if level < -1 or level > 1:
             return "Incorrect input"
 
