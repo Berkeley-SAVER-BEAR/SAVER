@@ -21,6 +21,7 @@ def main():
     while True:
         robot.run()
         time.sleep(1 / CYCLES_PER_SECOND)
+        #time.sleep(2)
 
 if __name__ == "__main__":
     main()
