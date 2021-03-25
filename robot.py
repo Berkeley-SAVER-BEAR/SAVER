@@ -31,11 +31,28 @@ class Robot:
         else:
             self.drive.tank_drive(-1, 1)'''
 
-        degree = (round(self.radio.get_DOA(), 4) + 45) %360 - 180
-        #if degree <= 5 or degree <= 355:
-            #self.tankdrive(1,1)
-        angle = round(math.radians(degree), 4)
-        forward = round(2 * math.cos(angle), 4)
-        turn = round(math.sin(angle) / 2, 4)
-        self.drive.arcade_drive(forward, turn)
-        
+        degree = (round(self.radio.get_DOA(), 4) + 45) %360
+        if degree <= 5:
+            self.drive.tank_drive(1, 0.9572)
+        elif degree <= 10:
+            self.drive.tank_drive(1, 0.9156)
+        elif degree <= 22.5:
+            self.drive.tank_drive(1, 0.8124)
+        elif degree <= 45:
+            self.drive.tank_drive(1, 0.6)
+        elif degree <= 67.5:
+            self.drive.tank_drive(1, 0.2473)
+        elif degree <= 180:
+            self.drive.tank_drive(0.5, -0.5)
+        elif degree >= 355:
+            self.drive.tank_drive(0.9572, 1)
+        elif degree >= 350:
+            self.drive.tank_drive(0.9156, 1)
+        elif degree >= 337.5:
+            self.drive.tank_drive(0.8124, 1)
+        elif degree >= 315:
+            self.drive.tank_drive(0.6, 1)
+        elif degree >= 292.5:
+            self.drive.tank_drive(0.2473, 1)
+        else:
+            self.drive.tank_drive(-0.5, 0.5)        
