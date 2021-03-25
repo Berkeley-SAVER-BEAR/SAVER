@@ -29,3 +29,7 @@ class SpeedController:
         else:
             thrust *= -1
             return 47.581695898375777 * thrust ** 2 + -7.292251741725251 * thrust ** 3 + -199.610465634680764 * thrust + 1460.832024027741454
+
+
+    def setspeed(self, level: float):
+        self.speed = self.getPWM(self, level)
