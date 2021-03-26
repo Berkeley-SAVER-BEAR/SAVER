@@ -1,4 +1,4 @@
-from random import randrange
+import random
 from time import time
 
 class KerberosSDR:
@@ -81,7 +81,7 @@ class KerberosSDR:
 
         # TODO: Return something more useful with alternate parameters
         if(True or type == "random"):
-            self._latest_DOA = randrange(0,360,1)
+            self._latest_DOA = int (random.random() * 360)
             return self._latest_DOA
 
     
