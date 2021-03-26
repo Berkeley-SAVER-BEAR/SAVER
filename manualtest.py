@@ -42,6 +42,8 @@ def straighttest(duration, scale):
     self.drive.tank_drive(0, 0, scale)
     time.sleep(3)
 
+def returntime():
+    return time.time
 
     
 
