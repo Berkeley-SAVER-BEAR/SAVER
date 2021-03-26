@@ -1,4 +1,4 @@
-import . from imu
+import .Imu from imu
 
 thisImu = Imu()
 
@@ -21,7 +21,7 @@ if t < 2:
     xDDCorr = acelVector[0]
     yDDCorr = acelVector[1]
     zDDCorr = acelVector[2]
-else
+else:
     xDD = acelVector[0] - xDDCorr
     yDD = acelVector[1] - yDDCorr
     zDD = acelVector[2] - zDDCorr
@@ -30,8 +30,17 @@ else
     yD = yD + yDD * dt
     zD = zD + zDD * dt
 
+    desiredXVelocity = fill this in.
+
+    velocityError = desiredVelocity - currentVelocity
+    lastVelocityError = totalVelocityError
+    totalVelocityError = totalVelocityError + velocityError * dt
+    slopeVelocityError = (lastVelocityError - velocityError)/dt
+
     x = x + xD * dt
     y = y + yD * dt
     z = z + zD * dt
 
-desiredV
+    outputPWM = 1000 * (desiredVelocity - currentVelocity) + 200 * totalVelocityError + 300 * slopeVelocityError
+
+
