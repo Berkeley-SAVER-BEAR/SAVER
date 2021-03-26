@@ -8,10 +8,10 @@ class Robot:
         self.radio = radio
         self.arduino = arduino
 
-    def run(self, method="simple_drive(SCALE)"):
+    def run(self, method="simple_drive"):
         #self.arduino.update()
 
-        getattr(self, method)()
+        getattr(self, method)(SCALE)
 
     def simple_drive(self, scale):
         """Turns in place if at an obtuse angle, 

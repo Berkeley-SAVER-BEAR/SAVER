@@ -14,7 +14,7 @@ def initialize():
     
     
 def turnrighttest(duration, scale):
-    self.drive.tank_drive(0.5, 0, scale)
+    drive.tank_drive(0.5, 0, scale)
     #self.drive.tank_drive(1, 0.2473, scale)
     #self.drive.tank_drive(1, 0.6, scale)
     #self.drive.tank_drive(1, 0.8124, scale)
@@ -22,24 +22,24 @@ def turnrighttest(duration, scale):
     #self.drive.tank_drive(1, 0.9572, scale)
 
     time.sleep(duration)
-    self.drive.tank_drive(0, 0, scale)
+    drive.tank_drive(0, 0, scale)
     time.sleep(3)
 
 def turnlefttest(duration, scale):
-    self.drive.tank_drive(0, 0.5, scale)
+    drive.tank_drive(0, 0.5, scale)
     #self.drive.tank_drive(0.2473, 1, scale)
     #self.drive.tank_drive(0.6, 1, scale)        
     #self.drive.tank_drive(0.8124, 1, scale)
     #self.drive.tank_drive(0.9156, 1, scale)        
     #self.drive.tank_drive(0.9572, 1, scale)
     time.sleep(duration)
-    self.drive.tank_drive(0, 0, scale)
+    drive.tank_drive(0, 0, scale)
     time.sleep(3)
 
 def straighttest(duration, scale):
-    self.drive.tank-drive(1, 1, scale)
+    drive.tank-drive(1, 1, scale)
     time.sleep(duration)
-    self.drive.tank_drive(0, 0, scale)
+    drive.tank_drive(0, 0, scale)
     time.sleep(3)
 
 def returntime():
@@ -85,5 +85,5 @@ def manualtest():
 
 
 
-if __name__ == "__manualtest__":
+if __name__ == "__main__":
     manualtest()
