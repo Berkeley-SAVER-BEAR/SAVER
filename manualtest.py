@@ -55,20 +55,33 @@ def manualtest():
     test_scale = 0.1
 
     #turnrighttest and turnlefttest
-    for x in range(1, 5):
-        robot.run(turnrighttest(x, test_scale))
-        #robot.run(turnlefttest(x))
+    for y in range(10):
+        scale = (y+1)/10
+        for x in range(1, 5):
+            robot.run(turnrighttest(x, scale))
+            robot.run(turnlefttest(x, scale))
 
-    
-    #go straight and back test
-    '''
     turntime = 2 #tested value for how long it takes to turn 180
 
+    #go straight and back test
+    '''
     for x in range(1,5):
         robot.run(straighttest(duration, test_scale))
         robot.run(turnrighttest(turntime, test_scale))
         robot.run(straighttest(duration, test_scale))
     '''
+
+    #go straight and back test, straight speed
+    '''
+    for x in range(10):
+        scale = (x+1)/10
+        robot.run(straighttest(3, scale))
+        robot.run(turnrighttest(turntime, test_scale))
+        robot.run(straighttest(3, scale))
+    '''
+
+    
+
 
 
 
