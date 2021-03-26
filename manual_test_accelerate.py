@@ -17,6 +17,7 @@ def accelerate_test(duration):
         drive.tank_drive(1, 1, x)
         time.sleep(duration)
     drive.drive.tank_drive(0, 0, 0)
+    time.sleep(3)
 
 
 def decelerate_test(duration):
@@ -26,6 +27,7 @@ def decelerate_test(duration):
         # keeps current speed for duration
         time.sleep(duration)
     drive.drive.tank_drive(0, 0, 0)
+    time.sleep(3)
 
     
 def manualtest():
