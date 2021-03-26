@@ -1,18 +1,18 @@
 from .arduino import Arduino
 class SpeedController:
 
-    def __init__(self, arduino: Arduino, port: int):
+    def __init__(self, arduino: Arduino):
         self.arduino = arduino
-        self.port = port
 
     # gets and return the PWM based on inputs between -1 and 1
     MAX_FORWARD = 2.71
     MAX_BACKWARDS = 2.90
 
 
-    def set_speed(self, speed: float):
+    def set_speed(self, speed1: float, speed2: float):
         """Runs the thruster at a specified speed between 1 (full speed forward) and -1 (full speed backward)"""
-        self.arduino.send("{0}{1}".format(self.port, self.getPWM(speed)))
+        #self.arduino.send("{0}{1}".format(self.port, self.getPWM(speed)))
+        self.arduino.send("{0}{1}{2}".format(round(self.getPWM(speed1)), "|", round(self.getPWM(speed2))))
 
     def getPWM(self, level): # level is between -1 to 1 where < 0 means backwards and > 0 means forward.
         # Gets the PWM

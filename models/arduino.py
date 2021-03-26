@@ -21,7 +21,7 @@ class Arduino:
     def send(self, msg: str):
         """Sends a string to the Arduino"""
         self.ser.write((msg + "\n").encode('utf-8'))
-        time.sleep(.5)
+        time.sleep(1 / CYCLES_PER_SECOND)
         print("MSG: ", msg)
         print("Decode: " , self.ser.readline().decode('utf-8'), "\n\n")
         
