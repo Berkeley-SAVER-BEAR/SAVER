@@ -1,12 +1,17 @@
 # Need to enable i2c slowdown on Raspberry Pi device tree overlay
-import board
+from board import *
 import busio
 import adafruit_bno055 as IMU
 
+#step 1. Setup imu and get readings going.
+#Step 2. Find initial orientations, and set that equal to 0
+#Step 3. Integeration: Position x,y,z, Velocity x,y,z Accleration x,y,z
+#Step 4. Integration: Euler Angles. Theta, Theta Dot, Theta DoubleDot (x,y,z)
+#Step 5. Calibration, fraction of input
 
 class Imu:
     def __init__(self):
-        i2c = busio.I2C(board.SCL, board.SDA)
+        i2c = busio.I2C(SCL,SDA)
         self.sensor = IMU.BNO055_I2C(i2c)
 
     def get_acceleration(self):
@@ -33,3 +38,4 @@ class Imu:
         """Returns 3-tuple of X, Y, Z gravity acceleration values (without the effect of linear acceleration)
         in m/s^2."""
         return self.sensor.gravity
+
