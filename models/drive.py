@@ -4,10 +4,10 @@ class Drive:
     def __init__(self, thrusters: SpeedController):
         self.thrusters = thrusters
 
-    def tank_drive(self, left: float, right: float):
-        self.thrusters.set_speed(left, right)
+    def tank_drive(self, left: float, right: float, scale):
+        self.thrusters.set_speed(left, right, scale)
 
-    def arcade_drive(self, forward: float, turn: float):
+    def arcade_drive(self, forward: float, turn: float, scale):
         """
         Control robot by forward speed and turn speed, both -1 to 1. 
         Positive turn for clockwise, negative for counterclockwise
@@ -20,4 +20,4 @@ class Drive:
         left /= scale_factor
         right /= scale_factor
 
-        self.tank_drive(left, right)
+        self.tank_drive(left, right, scale)
