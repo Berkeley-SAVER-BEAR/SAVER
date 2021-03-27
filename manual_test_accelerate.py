@@ -6,7 +6,7 @@ import time
 TEST_SCALE = 0.1
 DURATION = 3
 TURNTIME = 2
-INCREMENTS = 3
+INCREMENTS = 2
 LAST = 10
 
 class ManualTestAcceleration:
@@ -62,6 +62,10 @@ class ManualTestAcceleration:
                 time.sleep(duration)
             self.drive.tank_drive(0, 0, 0)
             time.sleep(3)
+
+        def stop(self):
+            for i in range(8):
+                self.drive.tank_drive(0, 0, 0)
             
         def manualtest(self, duration=DURATION, increments=INCREMENTS):
             
