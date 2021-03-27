@@ -8,6 +8,7 @@ DURATION = 3
 TURNTIME = 2
 INCREMENTS = 2
 LAST = 10
+MAXPWM = 4
 
 class ManualTestAcceleration:
         def __init__(self):
@@ -66,6 +67,27 @@ class ManualTestAcceleration:
         def stop(self):
             for i in range(8):
                 self.drive.tank_drive(0, 0, 0)
+
+        def naturaldeceleration(self, maxPWM=MAXPWM):
+            self.drive.tank_drive(0, 0, 0)
+            time.sleep(3)
+            for i in range(1, maxPWM):
+                x = i / 10
+                self.drive.tank_drive(1, 1, x)
+                time.sleep(1)
+            time.sleep(6)
+            self.drive.tank_drive(0, 0, 0)
+
+        def scalereverse(self, maxPWM=MAXPWM):
+	    self.drive.tank_drive(0, 0, 0)
+	    time.sleep(3)
+	    x = maxPWM / 10
+	    self.drive.tank_drive(1, 1, x)
+	    time.sleep(5)
+	    self.drive.tank_drive(1, 1, -x)
+	    time.sleep(5)
+	    self.drive.tank_drive(0, 0, 0)
+
             
         def manualtest(self, duration=DURATION, increments=INCREMENTS):
             
