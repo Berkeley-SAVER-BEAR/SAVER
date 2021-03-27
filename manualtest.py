@@ -20,30 +20,6 @@ class ManualTest:
         for i in range(8):
             self.drive.tank_drive(0, 0, TEST_SCALE)
 
-        #return drive, radio, arduino
-
-    #def main():
-        #drive, radio, arduino = initialize()
-        #robot = Robot(drive, radio, arduino)
-        #test_scale = 0.1
-        #duration = 3
-        #turntime = 2
-
-        #for i in range(8):
-        #    self.drive.tank_drive(0, 0, test_scale)
-
-        #uncomment depending on what test we want
-
-        #turnrighttest(duration, test_scale)
-        #turnlefttest(duration, test_scale)
-        #straighttestparams(duration, test_scale)
-        #turntest()
-        #straighttest(duration, test_scale, turntime)
-        #straightspeed(duration, test_scale, turntime)
-        
-        # for timing purposes
-        #t = returntime()
-        #print(time.asctime(time.localtime(t)))
 
     def turnrighttest(self, duration=DURATION, scale=TEST_SCALE):
         self.drive.tank_drive(0, 0, scale)
@@ -113,5 +89,3 @@ class ManualTest:
             self.straighttestparams(DURATION, scale)
             self.turnrighttest(TURNTIME, TEST_SCALE)
 
-#if __name__ == '__main__':
-#    main()
