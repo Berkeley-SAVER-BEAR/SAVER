@@ -1,13 +1,11 @@
-from . import SpeedController
+from .speed_controller import SpeedController
 
 class Drive:
-    def __init__(self, left_thruster: SpeedController, right_thruster: SpeedController):
-        self.left_thruster = left_thruster
-        self.right_thruster = right_thruster
+    def __init__(self, thrusters: SpeedController):
+        self.thrusters = thrusters
 
     def tank_drive(self, left: float, right: float):
-        self.left_thruster.set_speed(left)
-        self.right_thruster.set_speed(right)
+        self.thrusters.set_speed(left, right)
 
     def arcade_drive(self, forward: float, turn: float):
         """
