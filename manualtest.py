@@ -3,8 +3,8 @@ from models import Arduino, Drive, KerberosSDR, SpeedController
 from constants import *
 import time
 
-TEST_SCALE = 0.1
-DURATION = 3
+TEST_SCALE = 0.7
+DURATION = 1
 TURNTIME = 2
 
 class ManualTest:
@@ -51,10 +51,19 @@ class ManualTest:
     def straighttestparams(self, duration=DURATION, scale=TEST_SCALE):
         self.drive.tank_drive(0, 0, scale)
         time.sleep(duration)
-        self.drive.tank_drive(1, 1, scale)
-        time.sleep(duration)
-        self.drive.tank_drive(0, 0, scale)
-        time.sleep(3)
+        val = int(scale*10)
+        for i in range(val):
+            x = i / 10
+            self.drive.tank_drive(1,1,x)
+            time.sleep(duration)
+        #self.drive.tank_drive(1, 1, scale-0.2)
+        #time.sleep(duration)
+        #self.drive.tank_drive(1, 1, scale-0.1)
+        #time.sleep(duration)
+        #self.drive.tank_drive(1, 1, scale)
+        #time.sleep(duration)
+        #self.drive.tank_drive(0, 0, scale)
+        #time.sleep(3)
 
     def returntime(self):
         return time.time()
