@@ -81,4 +81,4 @@ def thrustToPWM(self, thrust):
     if PWM < 1820 and PWN > 1100:
         return PWM
     else:
-        return 0
+        return 1500
