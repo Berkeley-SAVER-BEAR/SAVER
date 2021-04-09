@@ -78,7 +78,11 @@ class SpeedController:
             yD = yD + yDD * dt
             zD = zD + zDD * dt
 
+
             #currentVelocity is undefined
+            #velocityError = desiredVelocity - currentVelocity
+
+            currentVelocity = (xD * xD + yD * yD + zD * zD) ** (.5)
             velocityError = desiredVelocity - currentVelocity
 
             #should this be below totalvelocityerror?
