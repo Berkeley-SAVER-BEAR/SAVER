@@ -41,11 +41,11 @@ class SpeedController:
         """Runs the thruster at a specified speed between 1 (full speed forward) and -1 (full speed backward)"""
         thrust1, thrust2 = 0, 0
         if speed1 > 0:
-            velocity1 = speed1 * scale * self.MAX_SPEED_FORWARD
+            velocity1 = speed1 * self.MAX_SPEED_FORWARD
         else:
-            velocity1 = speed1 * scale *self.MAX_SPEED_BACKWARDS
+            velocity1 = speed1 *self.MAX_SPEED_BACKWARDS
         if speed1 > 0:
-            velocity2 = speed2 * scale * self.MAX_SPEED_FORWARD
+            velocity2 = speed2 * self.MAX_SPEED_FORWARD
         else:
             velocity2 = speed2 * scale *self.MAX_SPEED_BACKWARDS
         thrust1 = self.getThrust(velocity1)
