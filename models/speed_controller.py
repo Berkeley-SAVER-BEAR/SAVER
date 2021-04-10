@@ -11,7 +11,7 @@ class SpeedController:
         # set dt to loop time.
         # D means derivative. xD means velocity. xDD means acceleration.
 
-        self.dt = 0.1
+        self.dt = 0.05
         self.t = 0
         self.x = 0
         self.y = 0
@@ -65,6 +65,7 @@ class SpeedController:
         #loop this every dt seconds
 
         acelVector = self.thisImu.get_acceleration()
+        print(acelVector[1])
         self.t = self.t + self.dt
 
         # when time is less than 2 seconds, make sure drone is steady to correct for sensor biases.
@@ -111,6 +112,7 @@ class SpeedController:
             #velocityError = desiredVelocity - currentVelocity
 
             currentVelocity = yD
+            #print(currentVelocity)
             velocityError = desiredVelocity - currentVelocity
 
             #should this be below totalvelocityerror?
@@ -142,7 +144,7 @@ class SpeedController:
             self.zDDCorr = zDDCorr
             self.totalVelocityError = totalVelocityError
 
-            outputThrust = 1 * (desiredVelocity - currentVelocity) + 0 * totalVelocityError
+            outputThrust = .3 * (desiredVelocity - currentVelocity) + 0 * totalVelocityError
             return outputThrust
 
     def thrustToPWM(self, thrust):
@@ -158,4 +160,9 @@ class SpeedController:
             return PWM
         else:
             print(PWM)
-            return 1500
+            if PWM > 3000 or PWM < 0:
+                return 1500
+            elif PWM > 1820:
+                return 1820
+            else:
+                return 1100

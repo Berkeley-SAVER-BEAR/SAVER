@@ -96,12 +96,12 @@ class ManualTest:
         #self.drive.tank_drive(0, 0, scale)
         #time.sleep(3)
 
-    def another_straight_test(self, desiredVelocity=DESIRED_VELOCITY, scale=SCALE, duration=DURATION):
+    def ast(self, desiredVelocity=DESIRED_VELOCITY, scale=SCALE, duration=DURATION):
         self.drive.tank_drive(0, 0, scale)
         time.sleep(duration)
-        for _ in range(50):
+        for _ in range(500):
             self.drive.tank_drive2(desiredVelocity)
-            time.sleep(.1)
+            time.sleep(.05)
 
         self.drive.tank_drive(0, 0, 0)
 
