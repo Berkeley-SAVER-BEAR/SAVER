@@ -52,6 +52,12 @@ class SpeedController:
         thrust2 = self.getThrust(velocity2)
         self.arduino.send("{0}{1}{2}".format(round(self.thrustToPWM(thrust1)), "|", round(self.thrustToPWM(thrust2))))
 
+    def set_speed2(self, desiredVelocity: float):
+        
+        thrust1 = self.getThrust(desiredVelocity)
+        thrust2 = self.getThrust(desiredVelocity)
+        self.arduino.send("{0}{1}{2}".format(round(self.thrustToPWM(thrust1)), "|", round(self.thrustToPWM(thrust2))))
+
     #Tracks velocity and implements PID control given desired velocity
 
     def getThrust(self, desiredVelocity):
