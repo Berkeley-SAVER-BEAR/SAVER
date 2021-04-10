@@ -80,7 +80,7 @@ class SpeedController:
             #change this to average bias
             # self.xDDCorr = acelVector[0]
             self.acelErrorTotal = self.acelErrorTotal + acelVector[1]
-            self.yDDCorr = self.acelErrorTotal/2
+            self.yDDCorr = self.acelErrorTotal/20
             # self.zDDCorr = acelVector[2]
             self.totalVelocityError = 0
             return 0
@@ -104,7 +104,7 @@ class SpeedController:
             print("Y velocity: ", yD)
 
             #xDD = acelVector[0] - xDDCorr
-            yDD = acelVector[1] - yDDCorr
+            yDD = acelVector[1] - self.yDDCorr
             print("Y Accel(corrected): ", yDD)
             #zDD = acelVector[2] - zDDCorr
 
