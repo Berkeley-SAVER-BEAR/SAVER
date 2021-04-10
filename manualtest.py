@@ -103,6 +103,8 @@ class ManualTest:
             self.drive.tank_drive2(desiredVelocity)
             time.sleep(.1)
 
+        self.drive.tank_drive(0, 0, 0)
+
     def return_time(self):
         return time.time()
 
