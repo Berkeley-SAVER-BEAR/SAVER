@@ -101,9 +101,13 @@ class SpeedController:
         print("Y position: ", y)
         print("Y velocity: ", yD)
 
-        #xDD = acelVector[0] - xDDCorr
-        #yDD = acelVector[1] - yDDCorr
-        #zDD = acelVector[2] - zDDCorr
+        # xDD = acelVector[0] - xDDCorr
+        # yDD = acelVector[1] - yDDCorr
+        # zDD = acelVector[2] - zDDCorr
+
+        xDD = acelVector[0] 
+        yDD = acelVector[1] 
+        zDD = acelVector[2] 
 
         xD = xD + xDD * dt
         yD = yD + yDD * dt
