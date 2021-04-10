@@ -8,27 +8,6 @@ DURATION = 2
 TURNTIME = 2
 
 
-#class LogTest():
-#
-#    def __init__(self, test_name, initial_data=None):
-#        self.filename = test_name + time.time()
-#        self.add(initial_data)
-#
-#    def add(self, string):
-#        file = open("log/" + self.filename, 'a')
-#        file.write(string + "\n")
-#        file.close()
-#
-#    def print(self):
-#        file = open("log/" + self.filename, 'r')
-#        print(file.read())
-#
-#
-#EULER_SPIN_LOG = LogTest(
-#    "euler",
-#    "Testing to find which value of the tuple represents spin in the x-y plane")
-
-
 class ManualTest:
     def __init__(self):
         self.arduino = Arduino()
@@ -193,3 +172,23 @@ class ManualTest:
     def dump_euler_angles(self):
         imu = Imu()
         EULER_SPIN_LOG.add(str(imu.get_euler_angles()))
+
+#class LogTest():
+#
+#    def __init__(self, test_name, initial_data=None):
+#        self.filename = test_name + time.time()
+#        self.add(initial_data)
+#
+#    def add(self, string):
+#        file = open("log/" + self.filename, 'a')
+#        file.write(string + "\n")
+#        file.close()
+#
+#    def print(self):
+#        file = open("log/" + self.filename, 'r')
+#        print(file.read())
+#
+#
+#EULER_SPIN_LOG = LogTest(
+#    "euler",
+#    "Testing to find which value of the tuple represents spin in the x-y plane")
