@@ -3,7 +3,7 @@ from models import Arduino, Drive, KerberosSDR, SpeedController, Imu
 from constants import *
 import time
 
-TEST_SCALE = 0.7
+TEST_SCALE = 1
 DURATION = 1
 TURNTIME = 2
 
@@ -75,8 +75,8 @@ class ManualTest:
         for y in range(10):
             scale = (y+1)/10
             for x in range(1, 5):
-                self.turnrighttest(x, scale)
-                self.turnlefttest(x, scale)
+                self.turn_right_test(x, scale)
+                self.turn_left_test(x, scale)
 
     def straight_test_params(self, duration=DURATION, scale=TEST_SCALE):
         self.drive.tank_drive(0, 0, scale)

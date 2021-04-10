@@ -104,7 +104,7 @@ class SpeedController:
             #currentVelocity is undefined
             #velocityError = desiredVelocity - currentVelocity
 
-            currentVelocity = (xD * xD + yD * yD + zD * zD) ** (.5)
+            currentVelocity = yD
             velocityError = desiredVelocity - currentVelocity
 
             #should this be below totalvelocityerror?
@@ -150,4 +150,5 @@ class SpeedController:
         if PWM < 1820 and PWM > 1100:
             return PWM
         else:
+            print(PWM)
             return 1500
