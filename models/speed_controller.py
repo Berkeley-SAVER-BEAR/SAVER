@@ -23,8 +23,9 @@ class SpeedController:
         self.yDD = 0
         self.zDD = 0
         # self.xDDCorr = 0
-        # self.yDDCorr = 0
+        self.yDDCorr = 0
         # self.zDDCorr = 0
+        self.acelErrorTotal = 0
 
         self.MAX_FORWARD = 2.71
         self.MAX_BACKWARDS = 2.90
@@ -65,24 +66,25 @@ class SpeedController:
         #loop this every dt seconds
 
         acelVector = self.thisImu.get_acceleration()
-        print("Y Accel: ", acelVector[1])
+        print("Y Accel (original): ", acelVector[1])
         self.t = self.t + self.dt
-
-        # when time is less than 2 seconds, make sure drone is steady to correct for sensor biases.
-        # if self.t < 2:
-        #     self.x = 0
-        #     self.y = 0
-        #     self.z = 0
-        #     self.xD = 0
-        #     self.yD = 0
-        #     self.zD = 0
-        #     #change this to average bias
-        #     # self.xDDCorr = acelVector[0]
-        #     # self.yDDCorr = acelVector[1]
-        #     # self.zDDCorr = acelVector[2]
-        #     self.totalVelocityError = 0
-        #     return 0
-        # else:
+        
+       # when time is less than 2 seconds, make sure drone is steady to correct for sensor biases.
+        if self.t < 2:
+            self.x = 0
+            self.y = 0
+            self.z = 0
+            self.xD = 0
+            self.yD = 0
+            self.zD = 0
+            #change this to average bias
+            # self.xDDCorr = acelVector[0]
+            self.acelErrorTotal = self.acelErrorTotal + acelVector[1]
+            self.yDDCorr = self.acelErrorTotal/2
+            # self.zDDCorr = acelVector[2]
+            self.totalVelocityError = 0
+            return 0
+        else:
         dt = self.dt
         t = self.t
         x = self.x
@@ -101,13 +103,14 @@ class SpeedController:
         print("Y position: ", y)
         print("Y velocity: ", yD)
 
-        # xDD = acelVector[0] - xDDCorr
-        # yDD = acelVector[1] - yDDCorr
-        # zDD = acelVector[2] - zDDCorr
+        #xDD = acelVector[0] - xDDCorr
+        yDD = acelVector[1] - yDDCorr
+        print("Y Accel(corrected): ", yDD)
+        #zDD = acelVector[2] - zDDCorr
 
-        xDD = acelVector[0] 
-        yDD = acelVector[1] 
-        zDD = acelVector[2] 
+        # xDD = acelVector[0] 
+        # yDD = acelVector[1] 
+        # zDD = acelVector[2] 
 
         xD = xD + xDD * dt
         yD = yD + yDD * dt
