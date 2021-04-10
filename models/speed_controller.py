@@ -72,7 +72,7 @@ class SpeedController:
         
 
        # when time is less than 2 seconds, make sure drone is steady to correct for sensor biases.
-        if self.t < 2:
+        if self.t <= 2:
             self.x = 0
             self.y = 0
             self.z = 0
@@ -107,7 +107,7 @@ class SpeedController:
             print("Y velocity: ", yD)
 
             #xDD = acelVector[0] - xDDCorr
-            yDD = acelVector[1] - self.acelErrorTotal/20
+            yDD = acelVector[1] - self.acelErrorTotal/39.0655
             print("Y Accel(corrected): ", yDD)
             #zDD = acelVector[2] - zDDCorr
 
