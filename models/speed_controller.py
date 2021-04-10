@@ -65,7 +65,7 @@ class SpeedController:
         #loop this every dt seconds
 
         acelVector = self.thisImu.get_acceleration()
-        print(acelVector[1])
+        print("Y Accel: ", acelVector[1])
         self.t = self.t + self.dt
 
         # when time is less than 2 seconds, make sure drone is steady to correct for sensor biases.
@@ -98,6 +98,8 @@ class SpeedController:
         # yDDCorr = self.yDDCorr
         # zDDCorr = self.zDDCorr
         totalVelocityError = self.totalVelocityError
+        print("Y position: ", y)
+        print("Y velocity: ", yD)
 
         #xDD = acelVector[0] - xDDCorr
         #yDD = acelVector[1] - yDDCorr
