@@ -26,7 +26,8 @@ MAX_BACKWARDS = 2.90
 
 MAX_SPEED_FORWARD = 1 #???
 MAX_SPEED_BACKWARDS = 1 #??
-
+totalVelocityError = 0.0 #??
+lastVelocityError = 0.0 #??
 
 class SpeedController:
 
@@ -86,9 +87,10 @@ class SpeedController:
             velocityError = desiredVelocity - currentVelocity
 
             #should this be below totalvelocityerror?
-            lastVelocityError = totalVelocityError
-            totalVelocityError = totalVelocityError + velocityError * dt
-            slopeVelocityError = (lastVelocityError - velocityError)/dt
+            self.lastVelocityError = self.totalVelocityError 
+            self.totalVelocityError = self.totalVelocityError + velocityError * dt
+
+            slopeVelocityError = (self.lastVelocityError - velocityError)/dt
 
             x = x + xD * dt
             y = y + yD * dt
@@ -97,7 +99,7 @@ class SpeedController:
             # PID controls, first part is P, second is I, last is D
             # Need to optomize constants for PID controls based on tests.
 
-            outputThrust = 1000 * (desiredVelocity - currentVelocity) + 200 * totalVelocityError + 300 * slopeVelocityError
+            outputThrust = 1000 * (desiredVelocity - currentVelocity) + 200 * self.totalVelocityError + 300 * slopeVelocityError
             return outputThrust
 
 def thrustToPWM(self, thrust):
