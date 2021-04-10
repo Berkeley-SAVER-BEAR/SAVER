@@ -42,6 +42,70 @@ class ManualTest:
         for i in range(8):
             self.drive.tank_drive(0, 0, TEST_SCALE)
 
+####### STOPPING BOAT #######
+    def stop(self):
+        for i in range(8):
+            self.drive.tank_drive(0, 0, 0)
+
+############################################
+############## LINEAR TESTS ################
+############################################
+
+    def reverse(self, duration=DURATION, scale=TEST_SCALE):
+        self.drive.tank_drive(0, 0, scale)
+        time.sleep(duration)
+        val = int(scale*10)
+        for i in range(val):
+            x = i / 10
+            self.drive.tank_drive(-1,-1,x)
+            time.sleep(duration)
+
+    def straight_test(self):
+        # turntime = 2 #tested value for how long it takes to turn 180
+        # go straight and back test
+        for x in range(1, 5):
+            self.straight_test_params(DURATION, TEST_SCALE)
+            self.turn_right_test(TURNTIME, TEST_SCALE)
+            self.straight_test_params(DURATION, TEST_SCALE)
+            self.turn_right_test(TURNTIME, TEST_SCALE)
+
+    def straight_speed(self):
+        # go straight and back test, straight speed
+        for x in range(10):
+            scale = (x+1)/10
+            self.straight_test_params(DURATION, scale)
+            self.turn_right_test(TURNTIME, TEST_SCALE)
+            self.straight_test_params(DURATION, scale)
+            self.turn_right_test(TURNTIME, TEST_SCALE)
+
+    def straight_test_params(self, duration=DURATION, scale=TEST_SCALE):
+        self.drive.tank_drive(0, 0, scale)
+        time.sleep(duration)
+        val = int(scale*10)
+        for i in range(val):
+            x = i / 10
+            self.drive.tank_drive(1,1,x)
+            time.sleep(duration)
+
+    def straight_right(self, duration=DURATION, scale=TEST_SCALE):
+        self.drive.tank_drive(0, 0, scale)
+        time.sleep(duration)
+        self.drive.tank_drive(1, 1, scale)
+        time.sleep(duration)
+        self.drive.tank_drive(1, 0.5, scale)
+
+    def straight_left(self, duration=DURATION, scale=TEST_SCALE):
+        self.drive.tank_drive(0, 0, scale)
+        time.sleep(duration)
+        self.drive.tank_drive(1, 1, scale)
+        time.sleep(duration)
+        self.drive.tank_drive(0.5, 1, scale)
+
+
+############################################
+############### TURN TESTS #################
+############################################
+
     def turn_right_test(self, duration=DURATION, scale=TEST_SCALE):
         self.drive.tank_drive(0, 0, scale)
         time.sleep(duration)
@@ -95,70 +159,13 @@ class ManualTest:
                 self.turnrighttest(x, scale)
                 self.turnlefttest(x, scale)
 
-    def straight_test_params(self, duration=DURATION, scale=TEST_SCALE):
-        self.drive.tank_drive(0, 0, scale)
-        time.sleep(duration)
-        val = int(scale*10)
-        for i in range(val):
-            x = i / 10
-            self.drive.tank_drive(1,1,x)
-            time.sleep(duration)
-        #self.drive.tank_drive(1, 1, scale-0.2)
-        #time.sleep(duration)
-        #self.drive.tank_drive(1, 1, scale-0.1)
-        #time.sleep(duration)
-        #self.drive.tank_drive(1, 1, scale)
-        #time.sleep(duration)
-        #self.drive.tank_drive(0, 0, scale)
-        #time.sleep(3)
 
-    def straight_right(self, duration=DURATION, scale=TEST_SCALE):
-        self.drive.tank_drive(0, 0, scale)
-        time.sleep(duration)
-        self.drive.tank_drive(1, 1, scale)
-        time.sleep(duration)
-        self.drive.tank_drive(1, 0.5, scale)
-
-    def straight_left(self, duration=DURATION, scale=TEST_SCALE):
-        self.drive.tank_drive(0, 0, scale)
-        time.sleep(duration)
-        self.drive.tank_drive(1, 1, scale)
-        time.sleep(duration)
-        self.drive.tank_drive(0.5, 1, scale)
+############################################
+############## OTHER TESTS #################
+############################################
 
     def return_time(self):
         return time.time()
-
-    def stop(self):
-        for i in range(8):
-            self.drive.tank_drive(0, 0, 0)
-
-    def reverse(self, duration=DURATION, scale=TEST_SCALE):
-        self.drive.tank_drive(0, 0, scale)
-        time.sleep(duration)
-        val = int(scale*10)
-        for i in range(val):
-            x = i / 10
-            self.drive.tank_drive(-1,-1,x)
-            time.sleep(duration)
-
-    def straight_test(self):
-        # turntime = 2 #tested value for how long it takes to turn 180
-        # go straight and back test
-        for x in range(1, 5):
-            self.straight_test_params(DURATION, TEST_SCALE)
-            self.turn_right_test(TURNTIME, TEST_SCALE)
-            self.straight_test_params(DURATION, TEST_SCALE)
-            self.turn_right_test(TURNTIME, TEST_SCALE)
-
-    def straight_speed(self):
-        # go straight and back test, straight speed
-        for x in range(10):
-            scale = (x+1)/10
-            self.straight_test_params(DURATION, scale)
-            self.turn_right_test(TURNTIME, TEST_SCALE)
-            self.straight_test_params(DURATION, scale)
-            self.turn_right_test(TURNTIME, TEST_SCALE)
 
     def dead_spin_test(self,
                        direction="left",
