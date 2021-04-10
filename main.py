@@ -1,5 +1,5 @@
 from robot import Robot
-from models import Arduino, Drive, KerberosSDR, SpeedController
+from models import Arduino, Drive, KerberosSDR, SpeedController, Imu
 from constants import *
 import time
 
@@ -7,10 +7,10 @@ def initialize():
     arduino = Arduino()
     thrusters = SpeedController(arduino)
     drive = Drive(thrusters)
-    #imu = Imu()
+    imu = Imu()
     radio = KerberosSDR()
 
-    return drive, radio, arduino
+    return drive, radio, arduino, imu
 
 def main():
     models = initialize()

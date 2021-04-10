@@ -1,37 +1,39 @@
 from .arduino import Arduino
-import . from imu
-
-thisImu = Imu()
-
-# set dt to loop time.
-# D means derivative. xD means velocity. xDD means acceleration.
-
-dt = 0.1
-t = 0
-x = 0
-y = 0
-z = 0
-xD = 0
-yD = 0
-zD = 0
-xDD = 0
-yDD = 0
-zDD = 0
-xDDCorr = 0
-yDDCorr = 0
-zDDCorr = 0
-
-MAX_FORWARD = 2.71
-MAX_BACKWARDS = 2.90
-
-MAX_SPEED_FORWARD = 1 #???
-MAX_SPEED_BACKWARDS = 1 #??
-
-#???
-totalVelocityError = 0
+from .imu import Imu
 
 
 class SpeedController:
+
+    def __init__(self, arduino: Arduino):
+        self.arduino = arduino
+        self.thisImu = Imu()
+
+        # set dt to loop time.
+        # D means derivative. xD means velocity. xDD means acceleration.
+
+        self.dt = 0.1
+        self.t = 0
+        self.x = 0
+        self.y = 0
+        self.z = 0
+        self.xD = 0
+        self.yD = 0
+        self.zD = 0
+        self.xDD = 0
+        self.yDD = 0
+        self.zDD = 0
+        self.xDDCorr = 0
+        self.yDDCorr = 0
+        self.zDDCorr = 0
+
+        self.MAX_FORWARD = 2.71
+        self.MAX_BACKWARDS = 2.90
+
+        self.MAX_SPEED_FORWARD = 1 #???
+        self.MAX_SPEED_BACKWARDS = 1 #??
+
+        #???
+        self.totalVelocityError = 0
 
 
     #calling thrusttoPwm: pass in level * forward/backward
@@ -56,11 +58,11 @@ class SpeedController:
 
         #loop this every dt seconds
 
-        acelVector = thisImu.get_acceleration(self)
-        t = t + dt
+        acelVector = self.thisImu.get_acceleration()
+        self.t = self.t + self.dt
 
         # when time is less than 2 seconds, make sure drone is steady to correct for sensor biases.
-        if t < 2:
+        if self.t < 2:
             self.x = 0
             self.y = 0
             self.z = 0
@@ -137,15 +139,15 @@ class SpeedController:
             outputThrust = 1000 * (desiredVelocity - currentVelocity) + 200 * totalVelocityError + 300 * slopeVelocityError
             return outputThrust
 
-def thrustToPWM(self, thrust):
-    PWM = 0
-    if thrust > 0:
-        PWM = -32.289500442873752 * thrust ** 2 + 3.869011829925794 * thrust ** 3 + 162.816482640325944 * thrust + 1537.793648693580053
-    else:
-        if thrust <= 0: #should this be < rather than <=??
-            PWM = 47.581695898375777 * thrust ** 2 + -7.292251741725251 * thrust ** 3 + -199.610465634680764 * thrust + 1460.832024027741454
+    def thrustToPWM(self, thrust):
+        PWM = 0
+        if thrust > 0:
+            PWM = -32.289500442873752 * thrust ** 2 + 3.869011829925794 * thrust ** 3 + 162.816482640325944 * thrust + 1537.793648693580053
+        else:
+            if thrust <= 0: #should this be < rather than <=??
+                PWM = 47.581695898375777 * thrust ** 2 + -7.292251741725251 * thrust ** 3 + -199.610465634680764 * thrust + 1460.832024027741454
 
-    if PWM < 1820 and PWM > 1100:
-        return PWM
-    else:
-        return 1500
+        if PWM < 1820 and PWM > 1100:
+            return PWM
+        else:
+            return 1500
