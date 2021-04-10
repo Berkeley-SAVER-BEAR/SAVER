@@ -22,9 +22,9 @@ class SpeedController:
         self.xDD = 0
         self.yDD = 0
         self.zDD = 0
-        self.xDDCorr = 0
-        self.yDDCorr = 0
-        self.zDDCorr = 0
+        # self.xDDCorr = 0
+        # self.yDDCorr = 0
+        # self.zDDCorr = 0
 
         self.MAX_FORWARD = 2.71
         self.MAX_BACKWARDS = 2.90
@@ -69,83 +69,83 @@ class SpeedController:
         self.t = self.t + self.dt
 
         # when time is less than 2 seconds, make sure drone is steady to correct for sensor biases.
-        if self.t < 2:
-            self.x = 0
-            self.y = 0
-            self.z = 0
-            self.xD = 0
-            self.yD = 0
-            self.zD = 0
-            #change this to average bias
-            self.xDDCorr = acelVector[0]
-            self.yDDCorr = acelVector[1]
-            self.zDDCorr = acelVector[2]
-            self.totalVelocityError = 0
-            return 0
-        else:
-            dt = self.dt
-            t = self.t
-            x = self.x
-            y = self.y
-            z = self.z
-            xD = self.xD
-            yD = self.yD
-            zD = self.zD
-            xDD = self.xDD
-            yDD = self.yDD
-            zDD = self.zDD
-            xDDCorr = self.xDDCorr
-            yDDCorr = self.yDDCorr
-            zDDCorr = self.zDDCorr
-            totalVelocityError = self.totalVelocityError
+        # if self.t < 2:
+        #     self.x = 0
+        #     self.y = 0
+        #     self.z = 0
+        #     self.xD = 0
+        #     self.yD = 0
+        #     self.zD = 0
+        #     #change this to average bias
+        #     # self.xDDCorr = acelVector[0]
+        #     # self.yDDCorr = acelVector[1]
+        #     # self.zDDCorr = acelVector[2]
+        #     self.totalVelocityError = 0
+        #     return 0
+        # else:
+        dt = self.dt
+        t = self.t
+        x = self.x
+        y = self.y
+        z = self.z
+        xD = self.xD
+        yD = self.yD
+        zD = self.zD
+        xDD = self.xDD
+        yDD = self.yDD
+        zDD = self.zDD
+        # xDDCorr = self.xDDCorr
+        # yDDCorr = self.yDDCorr
+        # zDDCorr = self.zDDCorr
+        totalVelocityError = self.totalVelocityError
 
-            xDD = acelVector[0] - xDDCorr
-            yDD = acelVector[1] - yDDCorr
-            zDD = acelVector[2] - zDDCorr
+        xDD = acelVector[0] - xDDCorr
+        yDD = acelVector[1] - yDDCorr
+        zDD = acelVector[2] - zDDCorr
 
-            xD = xD + xDD * dt
-            yD = yD + yDD * dt
-            zD = zD + zDD * dt
+        xD = xD + xDD * dt
+        yD = yD + yDD * dt
+        zD = zD + zDD * dt
 
 
-            #currentVelocity is undefined
-            #velocityError = desiredVelocity - currentVelocity
+        #currentVelocity is undefined
+        #velocityError = desiredVelocity - currentVelocity
 
-            currentVelocity = yD
-            #print(currentVelocity)
-            velocityError = desiredVelocity - currentVelocity
+        currentVelocity = yD
+        #print(currentVelocity)
+        velocityError = desiredVelocity - currentVelocity
 
-            #should this be below totalvelocityerror?
-            self.lastVelocityError = self.totalVelocityError 
-            self.totalVelocityError = self.totalVelocityError + velocityError * dt
+        #should this be below totalvelocityerror?
+        self.lastVelocityError = self.totalVelocityError 
+        self.totalVelocityError = self.totalVelocityError + velocityError * dt
 
-            slopeVelocityError = (self.lastVelocityError - velocityError)/dt
+        slopeVelocityError = (self.lastVelocityError - velocityError)/dt
 
-            x = x + xD * dt
-            y = y + yD * dt
-            z = z + zD * dt
+        x = x + xD * dt
+        y = y + yD * dt
+        z = z + zD * dt
 
-            # PID controls, first part is P, second is I, last is D
-            # Need to optomize constants for PID controls based on tests.
+        # PID controls, first part is P, second is I, last is D
+        # Need to optomize constants for PID controls based on tests.
 
-            self.dt = dt
-            self.t = t
-            self.x = x
-            self.y = y
-            self.z = z
-            self.xD = xD
-            self.yD = yD
-            self.zD = zD
-            self.xDD = xDD
-            self.yDD = yDD
-            self.zDD = zDD
-            self.xDDCorr = xDDCorr
-            self.yDDCorr = yDDCorr
-            self.zDDCorr = zDDCorr
-            self.totalVelocityError = totalVelocityError
+        self.dt = dt
+        self.t = t
+        self.x = x
+        self.y = y
+        self.z = z
+        self.xD = xD
+        self.yD = yD
+        self.zD = zD
+        self.xDD = xDD
+        self.yDD = yDD
+        self.zDD = zDD
+        self.xDDCorr = xDDCorr
+        self.yDDCorr = yDDCorr
+        self.zDDCorr = zDDCorr
+        self.totalVelocityError = totalVelocityError
 
-            outputThrust = .3 * (desiredVelocity - currentVelocity) + 0 * totalVelocityError
-            return outputThrust
+        outputThrust = .3 * (desiredVelocity - currentVelocity) + 0 * totalVelocityError
+        return outputThrust
 
     def thrustToPWM(self, thrust):
         PWM = 0
