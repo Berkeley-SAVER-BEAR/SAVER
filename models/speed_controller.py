@@ -154,6 +154,7 @@ class SpeedController:
                 PWM = 47.581695898375777 * thrust ** 2 + -7.292251741725251 * thrust ** 3 + -199.610465634680764 * thrust + 1460.832024027741454
 
         if PWM < 1820 and PWM > 1100:
+            print(PWM)
             return PWM
         else:
             print(PWM)
