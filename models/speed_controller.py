@@ -142,7 +142,7 @@ class SpeedController:
             self.zDDCorr = zDDCorr
             self.totalVelocityError = totalVelocityError
 
-            outputThrust = 1000 * (desiredVelocity - currentVelocity) + 200 * totalVelocityError + 300 * slopeVelocityError
+            outputThrust = 1 * (desiredVelocity - currentVelocity) + 0 * totalVelocityError
             return outputThrust
 
     def thrustToPWM(self, thrust):
