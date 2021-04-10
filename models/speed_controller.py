@@ -150,4 +150,5 @@ class SpeedController:
         if PWM < 1820 and PWM > 1100:
             return PWM
         else:
+	    print(PWM)	
             return 1500
