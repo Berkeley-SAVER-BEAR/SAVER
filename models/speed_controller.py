@@ -99,9 +99,9 @@ class SpeedController:
         # zDDCorr = self.zDDCorr
         totalVelocityError = self.totalVelocityError
 
-        xDD = acelVector[0] - xDDCorr
-        yDD = acelVector[1] - yDDCorr
-        zDD = acelVector[2] - zDDCorr
+        #xDD = acelVector[0] - xDDCorr
+        #yDD = acelVector[1] - yDDCorr
+        #zDD = acelVector[2] - zDDCorr
 
         xD = xD + xDD * dt
         yD = yD + yDD * dt
@@ -139,9 +139,9 @@ class SpeedController:
         self.xDD = xDD
         self.yDD = yDD
         self.zDD = zDD
-        self.xDDCorr = xDDCorr
-        self.yDDCorr = yDDCorr
-        self.zDDCorr = zDDCorr
+        #self.xDDCorr = xDDCorr
+        #self.yDDCorr = yDDCorr
+        #self.zDDCorr = zDDCorr
         self.totalVelocityError = totalVelocityError
 
         outputThrust = .3 * (desiredVelocity - currentVelocity) + 0 * totalVelocityError
