@@ -8,25 +8,25 @@ DURATION = 1
 TURNTIME = 2
 
 
-class LogTest():
-
-    def __init__(self, test_name, initial_data=None):
-        self.filename = test_name + time.time()
-        self.add(initial_data)
-
-    def add(self, string):
-        file = open("log/" + self.filename, 'a')
-        file.write(string + "\n")
-        file.close()
-
-    def print(self):
-        file = open("log/" + self.filename, 'r')
-        print(file.read())
-
-
-EULER_SPIN_LOG = LogTest(
-    "euler",
-    "Testing to find which value of the tuple represents spin in the x-y plane")
+#class LogTest():
+#
+#    def __init__(self, test_name, initial_data=None):
+#        self.filename = test_name + time.time()
+#        self.add(initial_data)
+#
+#    def add(self, string):
+#        file = open("log/" + self.filename, 'a')
+#        file.write(string + "\n")
+#        file.close()
+#
+#    def print(self):
+#        file = open("log/" + self.filename, 'r')
+#        print(file.read())
+#
+#
+#EULER_SPIN_LOG = LogTest(
+#    "euler",
+#    "Testing to find which value of the tuple represents spin in the x-y plane")
 
 
 class ManualTest:
@@ -100,6 +100,15 @@ class ManualTest:
     def stop(self):
         for i in range(8):
             self.drive.tank_drive(0, 0, 0)
+
+    def reverse(self, duration=DURATION, scale=TEST_SCALE):
+        self.drive.tank_drive(0, 0, scale)
+        time.sleep(duration)
+        val = int(scale*10)
+        for i in range(val):
+            x = i / 10
+            self.drive.tank_drive(1,-1,x)
+            time.sleep(duration)
 
     def straight_test(self):
         # turntime = 2 #tested value for how long it takes to turn 180
