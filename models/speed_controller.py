@@ -26,8 +26,10 @@ MAX_BACKWARDS = 2.90
 
 MAX_SPEED_FORWARD = 1 #???
 MAX_SPEED_BACKWARDS = 1 #??
-totalVelocityError = 0.0 #??
-lastVelocityError = 0.0 #??
+
+#???
+totalVelocityError = 0
+
 
 class SpeedController:
 
@@ -59,18 +61,35 @@ class SpeedController:
 
         # when time is less than 2 seconds, make sure drone is steady to correct for sensor biases.
         if t < 2:
-            x = 0
-            y = 0
-            z = 0
-            xD = 0
-            yD = 0
-            zD = 0
+            self.x = 0
+            self.y = 0
+            self.z = 0
+            self.xD = 0
+            self.yD = 0
+            self.zD = 0
             #change this to average bias
-            xDDCorr = acelVector[0]
-            yDDCorr = acelVector[1]
-            zDDCorr = acelVector[2]
+            self.xDDCorr = acelVector[0]
+            self.yDDCorr = acelVector[1]
+            self.zDDCorr = acelVector[2]
+            self.totalVelocityError = 0
             return 0
         else:
+            dt = self.dt
+            t = self.t
+            x = self.x
+            y = self.y
+            z = self.z
+            xD = self.xD
+            yD = self.yD
+            zD = self.zD
+            xDD = self.xDD
+            yDD = self.yDD
+            zDD = self.zDD
+            xDDCorr = self.xDDCorr
+            yDDCorr = self.yDDCorr
+            zDDCorr = self.zDDCorr
+            totalVelocityError = self.totalVelocityError
+
             xDD = acelVector[0] - xDDCorr
             yDD = acelVector[1] - yDDCorr
             zDD = acelVector[2] - zDDCorr
@@ -99,7 +118,23 @@ class SpeedController:
             # PID controls, first part is P, second is I, last is D
             # Need to optomize constants for PID controls based on tests.
 
-            outputThrust = 1000 * (desiredVelocity - currentVelocity) + 200 * self.totalVelocityError + 300 * slopeVelocityError
+            self.dt = dt
+            self.t = t
+            self.x = x
+            self.y = y
+            self.z = z
+            self.xD = xD
+            self.yD = yD
+            self.zD = zD
+            self.xDD = xDD
+            self.yDD = yDD
+            self.zDD = zDD
+            self.xDDCorr = xDDCorr
+            self.yDDCorr = yDDCorr
+            self.zDDCorr = zDDCorr
+            self.totalVelocityError = totalVelocityError
+
+            outputThrust = 1000 * (desiredVelocity - currentVelocity) + 200 * totalVelocityError + 300 * slopeVelocityError
             return outputThrust
 
 def thrustToPWM(self, thrust):
@@ -107,7 +142,7 @@ def thrustToPWM(self, thrust):
     if thrust > 0:
         PWM = -32.289500442873752 * thrust ** 2 + 3.869011829925794 * thrust ** 3 + 162.816482640325944 * thrust + 1537.793648693580053
     else:
-        if thrust <= 0: #shoudl this be < rather than <=??
+        if thrust <= 0: #should this be < rather than <=??
             PWM = 47.581695898375777 * thrust ** 2 + -7.292251741725251 * thrust ** 3 + -199.610465634680764 * thrust + 1460.832024027741454
 
     if PWM < 1820 and PWM > 1100:
