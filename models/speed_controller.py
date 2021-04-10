@@ -10,6 +10,7 @@ class SpeedController:
 
         # set dt to loop time.
         # D means derivative. xD means velocity. xDD means acceleration.
+        self.divCnt = 0
 
         self.dt = 0.05
         self.t = 0
@@ -69,6 +70,7 @@ class SpeedController:
         print("Y Accel (original): ", acelVector[1])
         self.t = self.t + self.dt
         
+
        # when time is less than 2 seconds, make sure drone is steady to correct for sensor biases.
         if self.t < 2:
             self.x = 0
@@ -80,9 +82,10 @@ class SpeedController:
             #change this to average bias
             # self.xDDCorr = acelVector[0]
             self.acelErrorTotal = self.acelErrorTotal + acelVector[1]
-            self.yDDCorr = self.acelErrorTotal/20
+            self.yDDCorr = self.acelErrorTotal
             # self.zDDCorr = acelVector[2]
             self.totalVelocityError = 0
+
             return 0
         else:
             dt = self.dt
@@ -104,7 +107,7 @@ class SpeedController:
             print("Y velocity: ", yD)
 
             #xDD = acelVector[0] - xDDCorr
-            yDD = acelVector[1] - self.yDDCorr
+            yDD = acelVector[1] - self.acelErrorTotal/20
             print("Y Accel(corrected): ", yDD)
             #zDD = acelVector[2] - zDDCorr
 
