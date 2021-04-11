@@ -3,7 +3,7 @@ from models import Arduino, Drive, KerberosSDR, SpeedController
 from constants import *
 import time
 
-TEST_SCALE = 0.4
+TEST_SCALE = 0.7
 DURATION = 2
 TURNTIME = 2
 
@@ -36,7 +36,7 @@ class ManualTest:
         val = int(scale*10)
         for i in range(val):
             x = i / 10
-            self.drive.tank_drive(-1,-1,x)
+            self.drive.tank_drive(-0.7,-1,x)
             time.sleep(duration)
 
     def straight_test(self):
@@ -69,17 +69,27 @@ class ManualTest:
     def straight_right(self, duration=DURATION, scale=TEST_SCALE):
         self.drive.tank_drive(0, 0, scale)
         time.sleep(duration)
-        self.drive.tank_drive(1, 1, scale)
-        time.sleep(duration)
-        self.drive.tank_drive(1, 0.5, scale)
+        #self.drive.tank_drive(1, 1, scale)
+        #time.sleep(duration)
+        self.drive.tank_drive(1, 0.8, scale)
 
     def straight_left(self, duration=DURATION, scale=TEST_SCALE):
         self.drive.tank_drive(0, 0, scale)
         time.sleep(duration)
-        self.drive.tank_drive(1, 1, scale)
-        time.sleep(duration)
-        self.drive.tank_drive(0.5, 1, scale)
+        #self.drive.tank_drive(1, 1, scale)
+        #time.sleep(duration)
+        self.drive.tank_drive(0.7, 1, scale)
 
+    def straight_left_right(self, duration=DURATION, scale=TEST_SCALE):
+        self.drive.tank_drive(0, 0, scale)
+        time.sleep(duration)
+        #self.drive.tank_drive(1, 1, scale)
+        #time.sleep(duration)
+        self.drive.tank_drive(0.2, 1, scale)
+        time.sleep(duration)
+        self.drive.tank_drive(1, 0.6, scale)
+        time.sleep(duration+1)
+        self.drive.tank_drive(0.7, 1, scale)
 
 ############################################
 ############### TURN TESTS #################
