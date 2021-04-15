@@ -1,12 +1,13 @@
-from models import Drive, KerberosSDR, Arduino
+from models import Drive, KerberosSDR, Arduino, Lidar
 import math
 from constants import *
 
 class Robot:
-    def __init__(self, drive: Drive, radio: KerberosSDR, arduino: Arduino):
+    def __init__(self, drive: Drive, radio: KerberosSDR, arduino: Arduino, lidar: Lidar):
         self.drive = drive
         self.radio = radio
         self.arduino = arduino
+        self.lidar = lidar
 
     def run(self, method="simple_drive"):
         #self.arduino.update()
