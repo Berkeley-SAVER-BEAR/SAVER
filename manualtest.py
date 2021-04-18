@@ -207,13 +207,13 @@ class ManualTest:
         self.drive.tank_drive(0,0,0)
 
     def imu_angle_test(self, desiredVelocity=DESIRED_VELOCITY, scale=SCALE, duration=DURATION):
-    self.drive.tank_drive(0, 0, scale)
-    time.sleep(duration)
-    for _ in range(500):
-        self.drive.tank_drive_imu_orientation(desiredVelocity)
-        time.sleep(.25)
+        self.drive.tank_drive(0, 0, scale)
+        time.sleep(duration)
+        for _ in range(500):
+            self.drive.tank_drive_imu_orientation(desiredVelocity)
+            time.sleep(.25)
 
-    self.drive.tank_drive(0, 0, 0)
+        self.drive.tank_drive(0, 0, 0)
 #class LogTest():
 #
 #    def __init__(self, test_name, initial_data=None):
