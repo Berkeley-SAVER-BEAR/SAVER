@@ -51,7 +51,7 @@ class SpeedController:
     def set_speed_imu_orientation(self, desiredVelocity: float):
         
         thrust = []
-        thrust += self.getThrust(desiredVelocity)
+        thrust = self.getThrust(desiredVelocity)
         #thrust2 = self.getThrust(desiredVelocity)
         self.arduino.send("{0}{1}{2}".format(round(self.thrustToPWM(thrust[0])), "|", round(self.thrustToPWM(thrust[1]))))
     
@@ -78,7 +78,7 @@ class SpeedController:
         	else:
         		self.currentAngle = -1*(360-angleVector[2])
 
-        self.totalAngleError = self.totalAngleError + (self.originalAngle - self.currentAngle)
+        self.totalAngleError = self.totalAngleError + (self.currentAngle-self.originalAngle)
         
         #From Meeting: Testing today, print out the angle, see how angle output reacts when offset to the left and right. Change the if statement correspondingly. 
         #Figure out which motor is thrust one/two. Left or right?
@@ -89,12 +89,18 @@ class SpeedController:
         
         #Switch depending on thruster orientation
         #New logic, if using 360, if greater than 180 turn one direction, less than turn another.
-
+        outputThrust = []
         if (self.currentAngle < self.originalAngle):
-            outputThrust = [desiredVelocity, (0*(desiredVelocity) * (self.originalAngle - self.currentAngle)) + (0 * (desiredVelocity) * self.totalAngleError/50)]
+            
+            outputThrust.append(desiredVelocity)
+            outputThrust.append((0*(desiredVelocity) * (self.originalAngle - self.currentAngle)) + (0 * (desiredVelocity) * self.totalAngleError/50))
+            
+            #outputThrust = [desiredVelocity, (0*(desiredVelocity) * (self.originalAngle - self.currentAngle)) + (0 * (desiredVelocity) * self.totalAngleError/50)]
             return outputThrust
         else:
-            outputThrust = [0*(desiredVelocity) * (self.originalAngle - self.currentAngle) + 0 * (desiredVelocity) * self.totalAngleError/50, desiredVelocity]
+            outputThrust.append(0*(desiredVelocity) * (self.originalAngle - self.currentAngle) + 0 * (desiredVelocity) * self.totalAngleError/50)
+            outputThrust.append(desiredVelocity)
+            #outputThrust = [0*(desiredVelocity) * (self.originalAngle - self.currentAngle) + 0 * (desiredVelocity) * self.totalAngleError/50, desiredVelocity]
             return outputThrust
             
 
