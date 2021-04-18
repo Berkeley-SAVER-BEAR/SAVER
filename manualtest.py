@@ -20,7 +20,8 @@ class ManualTest:
         self.robot = Robot(self.drive, self.radio, self.arduino, self.imu)
 
         for i in range(8):
-            self.drive.tank_drive(0, 0, TEST_SCALE)
+            #self.drive.tank_drive(0, 0, TEST_SCALE)
+            self.drive.tank_drive_imu_orientation(0.0)
 
 ####### STOPPING BOAT #######
     def stop(self):
