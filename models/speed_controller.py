@@ -50,9 +50,9 @@ class SpeedController:
 
     def set_speed_imu_orientation(self, desiredVelocity: float):
         
-        thrust1 = self.getThrust(desiredVelocity)[0]
-        thrust2 = self.getThrust(desiredVelocity)[1]
-        self.arduino.send("{0}{1}{2}".format(round(self.thrustToPWM(thrust1)), "|", round(self.thrustToPWM(thrust2))))
+        thrust = self.getThrust(desiredVelocity)
+        #thrust2 = self.getThrust(desiredVelocity)
+        self.arduino.send("{0}{1}{2}".format(round(self.thrustToPWM(thrust[0])), "|", round(self.thrustToPWM(thrust[1]))))
     
     #Tracks orientation and implements PID control to straighten vehicle
     #write getThrust(self,desiredVelocity,desiredAngle) for kerbrose, set original angle to desired angle every time.
