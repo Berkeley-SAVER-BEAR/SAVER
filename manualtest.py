@@ -183,6 +183,12 @@ class ManualTest:
         imu = Imu()
         EULER_SPIN_LOG.add(str(imu.get_euler_angles()))
 
+    def thruster_test(self):
+        self.drive.tank_drive(0,0,0)
+        time.sleep(2)
+        self.drive.tank_drive(0, 1, .2)
+        time.sleep(2)
+        self.drive.tank_drive(0,0,0)
 #class LogTest():
 #
 #    def __init__(self, test_name, initial_data=None):
