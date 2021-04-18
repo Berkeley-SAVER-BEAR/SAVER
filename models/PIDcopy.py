@@ -97,7 +97,7 @@ def thrustToPWM(self, thrust):
     PWM = 0
     if thrust > 0:
         PWM = -32.289500442873752 * thrust ** 2 + 3.869011829925794 * thrust ** 3 + 162.816482640325944 * thrust + 1537.793648693580053
-    elif thrust <= 0:
+    else:
         thrust <= 0: #shoudl this be < rather than <=??
         PWM 47.581695898375777 * thrust ** 2 + -7.292251741725251 * thrust ** 3 + -199.610465634680764 * thrust + 1460.832024027741454
 

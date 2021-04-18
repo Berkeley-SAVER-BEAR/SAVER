@@ -3,30 +3,31 @@ from models import Arduino, Drive, KerberosSDR, SpeedController, Imu
 from constants import *
 import time
 
-TEST_SCALE = 0.7
+TEST_SCALE = 1
 DURATION = 1
 TURNTIME = 2
+DESIRED_VELOCITY = 0.5
 
 
-class LogTest():
+#class LogTest():
 
-    def __init__(self, test_name, initial_data=None):
-        self.filename = test_name + time.time()
-        self.add(initial_data)
+    #def __init__(self, test_name, initial_data=None):
+        #self.filename = test_name + time.time()
+        #self.add(initial_data)
 
-    def add(self, string):
-        file = open("log/" + self.filename, 'a')
-        file.write(string + "\n")
-        file.close()
+    #def add(self, string):
+        #file = open("log/" + self.filename, 'a')
+        #file.write(string + "\n")
+        #file.close()
+#
+    #def print(self):
+        #file = open("log/" + self.filename, 'r')
+        #print(file.read())
+#
 
-    def print(self):
-        file = open("log/" + self.filename, 'r')
-        print(file.read())
-
-
-EULER_SPIN_LOG = LogTest(
-    "euler",
-    "Testing to find which value of the tuple represents spin in the x-y plane")
+#EULER_SPIN_LOG = LogTest(
+    #"euler",
+    #"Testing to find which value of the tuple represents spin in the x-y plane")
 
 
 class ManualTest:
@@ -34,10 +35,11 @@ class ManualTest:
         self.arduino = Arduino()
         self.thrusters = SpeedController(self.arduino)
         self.drive = Drive(self.thrusters)
-        #imu = Imu()
+        self.imu = Imu()
         self.radio = KerberosSDR()
+    
 
-        self.robot = Robot(self.drive, self.radio, self.arduino)
+        self.robot = Robot(self.drive, self.radio, self.arduino, self.imu)
 
         for i in range(8):
             self.drive.tank_drive(0, 0, TEST_SCALE)
@@ -74,8 +76,8 @@ class ManualTest:
         for y in range(10):
             scale = (y+1)/10
             for x in range(1, 5):
-                self.turnrighttest(x, scale)
-                self.turnlefttest(x, scale)
+                self.turn_right_test(x, scale)
+                self.turn_left_test(x, scale)
 
     def straight_test_params(self, duration=DURATION, scale=TEST_SCALE):
         self.drive.tank_drive(0, 0, scale)
@@ -93,6 +95,15 @@ class ManualTest:
         #time.sleep(duration)
         #self.drive.tank_drive(0, 0, scale)
         #time.sleep(3)
+
+    def ast(self, desiredVelocity=DESIRED_VELOCITY, scale=SCALE, duration=DURATION):
+        self.drive.tank_drive(0, 0, scale)
+        time.sleep(duration)
+        for _ in range(500):
+            self.drive.tank_drive2(desiredVelocity)
+            time.sleep(.05)
+
+        self.drive.tank_drive(0, 0, 0)
 
     def return_time(self):
         return time.time()

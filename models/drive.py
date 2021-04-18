@@ -21,3 +21,6 @@ class Drive:
         right /= scale_factor
 
         self.tank_drive(left, right, scale)
+
+    def tank_drive2(self, desiredVelocity: float):
+        self.thrusters.set_speed2(desiredVelocity)
