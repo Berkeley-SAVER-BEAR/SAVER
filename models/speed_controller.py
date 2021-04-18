@@ -77,7 +77,7 @@ class SpeedController:
         	else:
         		self.currentAngle = -1*(360-angleVector[2])
 
-        self.totalAngleError = totalAngleError + (originalAngle - currentAngle)
+        self.totalAngleError = self.totalAngleError + (self.originalAngle - self.currentAngle)
         
         #From Meeting: Testing today, print out the angle, see how angle output reacts when offset to the left and right. Change the if statement correspondingly. 
         #Figure out which motor is thrust one/two. Left or right?
@@ -89,11 +89,11 @@ class SpeedController:
         #Switch depending on thruster orientation
         #New logic, if using 360, if greater than 180 turn one direction, less than turn another.
 
-        if (currentAngle < originalAngle):
-            outputThrust = [desiredVelocity, (0*(desiredVelocity) * (originalAngle - currentAngle)) + (0 * (desiredVelocity) * totalAngleError/50)]
+        if (self.currentAngle < self.originalAngle):
+            outputThrust = [desiredVelocity, (0*(desiredVelocity) * (self.originalAngle - self.currentAngle)) + (0 * (desiredVelocity) * self.totalAngleError/50)]
             return outputThrust
         else:
-            outputThrust = [0*(desiredVelocity) * (originalAngle - currentAngle) + 0 * (desiredVelocity) * totalAngleError/50, desiredVelocity]
+            outputThrust = [0*(desiredVelocity) * (self.originalAngle - self.currentAngle) + 0 * (desiredVelocity) * self.totalAngleError/50, desiredVelocity]
             return outputThrust
             
 
