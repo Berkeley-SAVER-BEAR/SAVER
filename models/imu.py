@@ -1,8 +1,16 @@
+
 #!/usr/bin/env python3
+
+# Need to enable i2c slowdown on Raspberry Pi device tree overlay
+# import board
+# import busio
+# import adafruit_bno055 as IMU
+
 
 import logging
 import sys
 import time
+
 
 from Adafruit_BNO055 import BNO055
 
@@ -42,3 +50,4 @@ class Imu:
     def get_linear_acceleration(self):
         """Returns 3-tuple of X, Y, Z linear acceleration values (without effect of gravity) in m/s^2."""
         return self.bno.read_linear_acceleration()
+
