@@ -53,6 +53,7 @@ class SpeedController:
         thrust = []
         thrust = self.getThrust(desiredVelocity)
         #thrust2 = self.getThrust(desiredVelocity)
+        print(thrust)
         self.arduino.send("{0}{1}{2}".format(round(self.thrustToPWM(thrust[0])), "|", round(self.thrustToPWM(thrust[1]))))
     
     #Tracks orientation and implements PID control to straighten vehicle
