@@ -1,5 +1,5 @@
 from robot import Robot
-from models import Arduino, Drive, KerberosSDR, SpeedController
+from models import Arduino, Drive, KerberosSDR, SpeedController, Imu
 from constants import *
 import time
 
@@ -223,3 +223,14 @@ class ManualTest:
 #EULER_SPIN_LOG = LogTest(
 #    "euler",
 #    "Testing to find which value of the tuple represents spin in the x-y plane")
+
+
+
+def imu_angle_test(self, desiredVelocity=DESIRED_VELOCITY, scale=SCALE, duration=DURATION):
+    self.drive.tank_drive(0, 0, scale)
+    time.sleep(duration)
+    for _ in range(500):
+        self.drive.tank_drive_imu_orientation(desiredVelocity)
+        time.sleep(.25)
+
+    self.drive.tank_drive(0, 0, 0)

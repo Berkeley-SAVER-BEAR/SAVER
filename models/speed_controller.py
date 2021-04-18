@@ -1,3 +1,4 @@
+  
 from .arduino import Arduino
 from .imu import Imu
 
@@ -10,23 +11,12 @@ class SpeedController:
 
         # set dt to loop time.
         # D means derivative. xD means velocity. xDD means acceleration.
-        self.divCnt = 0
 
         self.dt = 0.05
         self.t = 0
-        self.x = 0
-        self.y = 0
-        self.z = 0
-        self.xD = 0
-        self.yD = 0
-        self.zD = 0
-        self.xDD = 0
-        self.yDD = 0
-        self.zDD = 0
-        # self.xDDCorr = 0
-        self.yDDCorr = 0
-        # self.zDDCorr = 0
-        self.acelErrorTotal = 0
+        self.currentAngle = 0
+        self.originalAngle = 0
+        self.totalAngleError = 0
 
         self.MAX_FORWARD = 2.71
         self.MAX_BACKWARDS = 2.90
@@ -34,8 +24,6 @@ class SpeedController:
         self.MAX_SPEED_FORWARD = 1 #???
         self.MAX_SPEED_BACKWARDS = 1 #??
 
-        #???
-        self.totalVelocityError = 0
 
 
     #calling thrusttoPwm: pass in level * forward/backward
@@ -60,104 +48,54 @@ class SpeedController:
         thrust2 = self.getThrust(desiredVelocity)
         self.arduino.send("{0}{1}{2}".format(round(self.thrustToPWM(thrust1)), "|", round(self.thrustToPWM(thrust2))))
 
-    #Tracks velocity and implements PID control given desired velocity
-
+    def set_speed_imu_orientation(self, desiredVelocity: float):
+        
+        thrust1 = self.getThrust(desiredVelocity)[0]
+        thrust2 = self.getThrust(desiredVelocity)[1]
+        self.arduino.send("{0}{1}{2}".format(round(self.thrustToPWM(thrust1)), "|", round(self.thrustToPWM(thrust2))))
+    
+    #Tracks orientation and implements PID control to straighten vehicle
+    #write getThrust(self,desiredVelocity,desiredAngle) for kerbrose, set original angle to desired angle every time.
+    
     def getThrust(self, desiredVelocity):
 
         #loop this every dt seconds
+        #find out which euler angle we need
 
-        acelVector = self.thisImu.get_acceleration()
-        print("Y Accel (original): ", acelVector[1])
+        angleVector = self.thisImu.get_euler_angles()
+        print("Measured Angle: ", angleVector[2])
         self.t = self.t + self.dt
         
 
-       # when time is less than 2 seconds, make sure drone is steady to correct for sensor biases.
-        if self.t <= 2:
-            self.x = 0
-            self.y = 0
-            self.z = 0
-            self.xD = 0
-            self.yD = 0
-            self.zD = 0
-            #change this to average bias
-            # self.xDDCorr = acelVector[0]
-            self.acelErrorTotal = self.acelErrorTotal + acelVector[1]
-            self.yDDCorr = self.acelErrorTotal
-            # self.zDDCorr = acelVector[2]
-            self.totalVelocityError = 0
-
+        # when time is less than .5 seconds, make sure drone is steady to correct for sensor biases.
+        if self.t <= .5:
+            self.originalAngle = angleVector[2]
             return 0
         else:
-            dt = self.dt
-            t = self.t
-            x = self.x
-            y = self.y
-            z = self.z
-            xD = self.xD
-            yD = self.yD
-            zD = self.zD
-            xDD = self.xDD
-            yDD = self.yDD
-            zDD = self.zDD
-            # xDDCorr = self.xDDCorr
-            # yDDCorr = self.yDDCorr
-            # zDDCorr = self.zDDCorr
-            totalVelocityError = self.totalVelocityError
-            print("Y position: ", y)
-            print("Y velocity: ", yD)
+        	if angleVector[2] <= 180:
+        		self.currentAngle = angleVector[2] 
+        	else:
+        		self.currentAngle = -1*(360-angleVector[2])
 
-            #xDD = acelVector[0] - xDDCorr
-            yDD = acelVector[1] - self.acelErrorTotal/39.0655
-            print("Y Accel(corrected): ", yDD)
-            #zDD = acelVector[2] - zDDCorr
+        self.totalAngleError = totalAngleError + (originalAngle - currentAngle)
+        
+        #From Meeting: Testing today, print out the angle, see how angle output reacts when offset to the left and right. Change the if statement correspondingly. 
+        #Figure out which motor is thrust one/two. Left or right?
+        #New logic, if using 360, if greater than 180 turn one direction, less than turn another.
+        #Match up the thrust with the motors
+        
+        #Tune the values of the controllers. First put the drone in the water. Set the desired velocity to a very low value. Leave the drone for two seconds. Once the drone starts running, you give #the drone an offset error.
+        
+        #Switch depending on thruster orientation
+        #New logic, if using 360, if greater than 180 turn one direction, less than turn another.
 
-            # xDD = acelVector[0] 
-            # yDD = acelVector[1] 
-            # zDD = acelVector[2] 
-
-            xD = xD + xDD * dt
-            yD = yD + yDD * dt
-            zD = zD + zDD * dt
-
-
-            #currentVelocity is undefined
-            #velocityError = desiredVelocity - currentVelocity
-
-            currentVelocity = yD
-            #print(currentVelocity)
-            velocityError = desiredVelocity - currentVelocity
-
-            #should this be below totalvelocityerror?
-            self.lastVelocityError = self.totalVelocityError 
-            self.totalVelocityError = self.totalVelocityError + velocityError * dt
-
-            slopeVelocityError = (self.lastVelocityError - velocityError)/dt
-
-            x = x + xD * dt
-            y = y + yD * dt
-            z = z + zD * dt
-
-            # PID controls, first part is P, second is I, last is D
-            # Need to optomize constants for PID controls based on tests.
-
-            self.dt = dt
-            self.t = t
-            self.x = x
-            self.y = y
-            self.z = z
-            self.xD = xD
-            self.yD = yD
-            self.zD = zD
-            self.xDD = xDD
-            self.yDD = yDD
-            self.zDD = zDD
-            #self.xDDCorr = xDDCorr
-            #self.yDDCorr = yDDCorr
-            #self.zDDCorr = zDDCorr
-            self.totalVelocityError = totalVelocityError
-
-            outputThrust = .3 * (desiredVelocity - currentVelocity) + 0 * totalVelocityError
+        if (currentAngle < originalAngle):
+            outputThrust = [desiredVelocity, (0*(desiredVelocity) * (originalAngle - currentAngle)) + (0 * (desiredVelocity) * totalAngleError/50)]
             return outputThrust
+        else:
+            outputThrust = [0*(desiredVelocity) * (originalAngle - currentAngle) + 0 * (desiredVelocity) * totalAngleError/50, desiredVelocity]
+            return outputThrust
+            
 
     def thrustToPWM(self, thrust):
         PWM = 0
