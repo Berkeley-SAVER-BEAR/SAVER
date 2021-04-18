@@ -72,7 +72,7 @@ class SpeedController:
         # when time is less than .5 seconds, make sure drone is steady to correct for sensor biases.
         if self.t <= .5:
             self.originalAngle = angleVector[2]
-            return 0
+            return [0,0]
         else:
         	if angleVector[2] <= 180:
         		self.currentAngle = angleVector[2] 
@@ -93,15 +93,15 @@ class SpeedController:
         outputThrust = []
         if (self.currentAngle < self.originalAngle):
             
-            outputThrust.append(desiredVelocity)
-            outputThrust.append((0*(desiredVelocity) * (self.originalAngle - self.currentAngle)) + (0 * (desiredVelocity) * self.totalAngleError/50))
+            # outputThrust.append(desiredVelocity)
+            # outputThrust.append((0*(desiredVelocity) * (self.originalAngle - self.currentAngle)) + (0 * (desiredVelocity) * self.totalAngleError/50))
             
-            #outputThrust = [desiredVelocity, (0*(desiredVelocity) * (self.originalAngle - self.currentAngle)) + (0 * (desiredVelocity) * self.totalAngleError/50)]
+            outputThrust = [desiredVelocity, (0*(desiredVelocity) * (self.originalAngle - self.currentAngle)) + (0 * (desiredVelocity) * self.totalAngleError/50)]
             return outputThrust
         else:
-            outputThrust.append(0*(desiredVelocity) * (self.originalAngle - self.currentAngle) + 0 * (desiredVelocity) * self.totalAngleError/50)
-            outputThrust.append(desiredVelocity)
-            #outputThrust = [0*(desiredVelocity) * (self.originalAngle - self.currentAngle) + 0 * (desiredVelocity) * self.totalAngleError/50, desiredVelocity]
+            # outputThrust.append(0*(desiredVelocity) * (self.originalAngle - self.currentAngle) + 0 * (desiredVelocity) * self.totalAngleError/50)
+            # outputThrust.append(desiredVelocity)
+            outputThrust = [0*(desiredVelocity) * (self.originalAngle - self.currentAngle) + 0 * (desiredVelocity) * self.totalAngleError/50, desiredVelocity]
             return outputThrust
             
 
