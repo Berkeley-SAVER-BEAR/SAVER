@@ -50,7 +50,8 @@ class SpeedController:
 
     def set_speed_imu_orientation(self, desiredVelocity: float):
         
-        thrust = self.getThrust(desiredVelocity)
+        thrust = []
+        thrust += self.getThrust(desiredVelocity)
         #thrust2 = self.getThrust(desiredVelocity)
         self.arduino.send("{0}{1}{2}".format(round(self.thrustToPWM(thrust[0])), "|", round(self.thrustToPWM(thrust[1]))))
     
