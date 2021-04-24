@@ -23,7 +23,7 @@ def main():
     #time.sleep(2)
 
     while True:
-        robot.run()
+        robot.simple_drive(SCALE)
         time.sleep(1 / CYCLES_PER_SECOND)
         #time.sleep(3)
 
