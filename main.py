@@ -9,6 +9,8 @@ def initialize():
     drive = Drive(thrusters)
     #imu = Imu()
     radio = KerberosSDR()
+    for i in range(8):
+        drive.tank_drive(0, 0, 0)
 
     return drive, radio, arduino
 

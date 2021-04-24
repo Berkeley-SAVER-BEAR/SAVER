@@ -19,7 +19,7 @@ class ManualTest:
         self.radio = KerberosSDR()
     
 
-        self.robot = Robot(self.drive, self.radio, self.arduino, self.imu)
+        self.robot = Robot(self.drive, self.radio, self.arduino)
 
         for i in range(8):
             #self.drive.tank_drive(0, 0, TEST_SCALE)
