@@ -1,6 +1,7 @@
   
 from .arduino import Arduino
 from .imu import Imu
+from .lidar import Lidar
 
 
 class SpeedController:
@@ -8,7 +9,7 @@ class SpeedController:
     def __init__(self, arduino: Arduino):
         self.arduino = arduino
         self.thisImu = Imu()
-
+        self.lidar = Lidar()
         # set dt to loop time.
         # D means derivative. xD means velocity. xDD means acceleration.
 
@@ -91,6 +92,15 @@ class SpeedController:
         #Switch depending on thruster orientation
         #New logic, if using 360, if greater than 180 turn one direction, less than turn another.
         outputThrust = []
+
+
+
+        #code for lidar
+        #if the boat is not in range for the lidar, assume is returns 10 meters
+        distance = lidar.distance()
+        if distance < 5:
+            desiredVelocity = (distance / 5) * desiredVelocity
+    
         if (self.currentAngle < self.originalAngle):
             
             # outputThrust.append(desiredVelocity)
