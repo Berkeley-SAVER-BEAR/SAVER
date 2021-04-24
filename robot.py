@@ -33,10 +33,13 @@ class Robot:
         else:
             self.drive.tank_drive(-1, 1)'''
 
-        degree = (round(self.radio.get_DOA(), 4) + 45) %360
+        degree = (round(self.radio.get_DOA(), 4) + 45) % 360
+        print("Kerberos Angle: ", degree)
         #degree = (round(self.manualtest._____, 4) + 45) %360
 
-        if degree <= 5:
+        if degree == 0:
+            self.drive.tank_drive(1, 1, scale)
+        elif degree <= 5:
             self.drive.tank_drive(1, 0.9572, scale)
         elif degree <= 10:
             self.drive.tank_drive(1, 0.9156, scale)
