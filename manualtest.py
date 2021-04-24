@@ -1,19 +1,21 @@
 from robot import Robot
-from models import Arduino, Drive, KerberosSDR, SpeedController, Imu
+from models import Arduino, Drive, KerberosSDR, SpeedController
 from constants import *
 import time
 
-TEST_SCALE = 0.7
-DURATION = 2
-TURNTIME = 2
 DESIRED_VELOCITY = 0.5
+TEST_SCALE = 0.5
+DURATION = 1
+TURNTIME = 5
+REVERSE_SCALE = 1
+
 
 class ManualTest:
     def __init__(self):
         self.arduino = Arduino()
         self.thrusters = SpeedController(self.arduino)
         self.drive = Drive(self.thrusters)
-        self.imu = Imu()
+        #self.imu = Imu()
         self.radio = KerberosSDR()
     
 
@@ -32,13 +34,13 @@ class ManualTest:
 ############## LINEAR TESTS ################
 ############################################
 
-    def reverse(self, duration=DURATION, scale=TEST_SCALE):
+    def reverse(self, duration=DURATION, scale=REVERSE_SCALE):
         self.drive.tank_drive(0, 0, scale)
         time.sleep(duration)
-        val = int(scale*10)
-        for i in range(val):
+        #val = int(scale*10)
+        for i in range(scale+1):
             x = i / 10
-            self.drive.tank_drive(-0.7,-1,x)
+            self.drive.tank_drive(-1,-.91,x)
             time.sleep(duration)
 
     def straight_test(self):
@@ -65,7 +67,7 @@ class ManualTest:
         val = int(scale*10)
         for i in range(val):
             x = i / 10
-            self.drive.tank_drive(1,1,x)
+            self.drive.tank_drive(.8,1,x)
             time.sleep(duration)
 
     def straight_right(self, duration=DURATION, scale=TEST_SCALE):
@@ -92,6 +94,15 @@ class ManualTest:
         self.drive.tank_drive(1, 0.6, scale)
         time.sleep(duration+1)
         self.drive.tank_drive(0.7, 1, scale)
+
+
+    def straight_reverse(self, duration=DURATION, scale=TEST_SCALE):
+        self.drive.tank_drive(0,0,scale)
+        time.sleep(duration)
+        self.straight_test_params(duration, scale)
+        self.drive.tank_drive(0,0,0)
+        time.sleep(.1)
+        self.drive.tank_drive(-.5, -1, .5)
 
 ############################################
 ############### TURN TESTS #################
@@ -164,6 +175,13 @@ class ManualTest:
 
     
 
+    def skrt(self, duration=DURATION, scale=TEST_SCALE, turntime=TURNTIME):
+        self.drive.tank_drive(0,0,0)
+        time.sleep(2)
+        self.straight_test_params(duration, scale)
+        self.drive.tank_drive(-.25,1,scale)
+        time.sleep(turntime)
+        self.drive.tank_drive(1,1,scale)
 
 ############################################
 ############## OTHER TESTS #################
