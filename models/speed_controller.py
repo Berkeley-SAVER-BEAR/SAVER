@@ -1,14 +1,14 @@
   
 from .arduino import Arduino
 from .imu import Imu
-
+from .kerberos_sdr import KerberosSDR
 
 class SpeedController:
 
     def __init__(self, arduino: Arduino):
         self.arduino = arduino
         self.thisImu = Imu()
-
+        self.kerberos = KerberosSDR()
         # set dt to loop time.
         # D means derivative. xD means velocity. xDD means acceleration.
 
@@ -64,22 +64,20 @@ class SpeedController:
         #loop this every dt seconds
         #find out which euler angle we need
 
-        angleVector = self.thisImu.get_euler_angles()
-        print("Measured Angle: ", angleVector[2])
+
         self.t = self.t + self.dt
         
+        doaangle = self.kerberos.getDOA()
+        print("Kerbrose Angle: ", doaangle)
 
         # when time is less than .5 seconds, make sure drone is steady to correct for sensor biases.
-        if self.t <= .5:
-            self.originalAngle = angleVector[2]
-            return [0,0]
-        else:
-        	if angleVector[2] <= 180:
-        		self.currentAngle = angleVector[2] 
-        	else:
-        		self.currentAngle = -1*(360-angleVector[2])
 
-        self.totalAngleError = self.totalAngleError + (self.currentAngle-self.originalAngle)
+        if doaangle <= 180:
+        	self.currentAngle = doaangle
+        else:
+        	self.currentAngle = -1*(360- doaangle)
+
+        self.totalAngleError = self.totalAngleError + (self.currentAngle)
         
         #From Meeting: Testing today, print out the angle, see how angle output reacts when offset to the left and right. Change the if statement correspondingly. 
         #Figure out which motor is thrust one/two. Left or right?
@@ -96,12 +94,12 @@ class SpeedController:
             # outputThrust.append(desiredVelocity)
             # outputThrust.append((0*(desiredVelocity) * (self.originalAngle - self.currentAngle)) + (0 * (desiredVelocity) * self.totalAngleError/50))
             
-            outputThrust = [desiredVelocity, (0*(desiredVelocity) * (self.originalAngle - self.currentAngle)) + (0 * (desiredVelocity) * self.totalAngleError/50)]
+            outputThrust = [desiredVelocity, (0*(desiredVelocity) * (0 - self.currentAngle)) + (0 * (desiredVelocity) * self.totalAngleError/50)]
             return outputThrust
         else:
             # outputThrust.append(0*(desiredVelocity) * (self.originalAngle - self.currentAngle) + 0 * (desiredVelocity) * self.totalAngleError/50)
             # outputThrust.append(desiredVelocity)
-            outputThrust = [0*(desiredVelocity) * (self.originalAngle - self.currentAngle) + 0 * (desiredVelocity) * self.totalAngleError/50, desiredVelocity]
+            outputThrust = [0*(desiredVelocity) * (0 - self.currentAngle) + 0 * (desiredVelocity) * self.totalAngleError/50, desiredVelocity]
             return outputThrust
             
 
