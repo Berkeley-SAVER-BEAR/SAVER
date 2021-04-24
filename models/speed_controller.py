@@ -29,18 +29,20 @@ class SpeedController:
     #calling thrusttoPwm: pass in level * forward/backward
     def set_speed(self, speed1: float, speed2: float, scale):
         """Runs the thruster at a specified speed between 1 (full speed forward) and -1 (full speed backward)"""
-        thrust1, thrust2 = 0, 0
-        if speed1 > 0:
-            velocity1 = speed1 * self.MAX_SPEED_FORWARD
-        else:
-            velocity1 = speed1 * self.MAX_SPEED_BACKWARDS
-        if speed1 > 0:
-            velocity2 = speed2 * self.MAX_SPEED_FORWARD
-        else:
-            velocity2 = speed2 * scale *self.MAX_SPEED_BACKWARDS
-        thrust1 = self.getPWM(velocity1, scale)
-        thrust2 = self.getPWM(velocity2, scale)
-        self.arduino.send("{0}{1}{2}".format(round(self.thrustToPWM(thrust1)), "|", round(self.thrustToPWM(thrust2))))
+        # thrust1, thrust2 = 0, 0
+        # if speed1 > 0:
+        #     velocity1 = speed1 * self.MAX_SPEED_FORWARD
+        # else:
+        #     velocity1 = speed1 * self.MAX_SPEED_BACKWARDS
+        # if speed1 > 0:
+        #     velocity2 = speed2 * self.MAX_SPEED_FORWARD
+        # else:
+        #     velocity2 = speed2 * scale *self.MAX_SPEED_BACKWARDS
+        # thrust1 = self.getPWM(velocity1, scale)
+        # thrust2 = self.getPWM(velocity2, scale)
+        # self.arduino.send("{0}{1}{2}".format(round(self.thrustToPWM(thrust1)), "|", round(self.thrustToPWM(thrust2))))
+
+        self.arduino.send("{0}{1}{2}".format(round(self.getPWM(speed1, scale)), "|", round(self.getPWM(speed2, scale))))
 
     def set_speed2(self, desiredVelocity: float):
         
