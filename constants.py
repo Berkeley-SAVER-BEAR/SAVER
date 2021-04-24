@@ -1,5 +1,5 @@
 ARDUINO_BAUDRATE = 9600
-ARDUINO_PORT = '/dev/ttyACM0' # TODO: update to correct value
+ARDUINO_PORT = '/dev/ttyACM0' 
 SERIAL_TIMEOUT = 0 # https://pythonhosted.org/pyserial/pyserial_api.html#native-ports
 
 LEFT_THRUSTER_PORT = 0 # TODO: update to correct value
