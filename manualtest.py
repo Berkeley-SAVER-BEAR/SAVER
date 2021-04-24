@@ -3,6 +3,7 @@ from models import Arduino, Drive, KerberosSDR, SpeedController
 from constants import *
 import time
 
+DESIRED_VELOCITY = 0.5
 TEST_SCALE = 0.5
 DURATION = 1
 TURNTIME = 5
@@ -14,13 +15,15 @@ class ManualTest:
         self.arduino = Arduino()
         self.thrusters = SpeedController(self.arduino)
         self.drive = Drive(self.thrusters)
-        #imu = Imu()
+        #self.imu = Imu()
         self.radio = KerberosSDR()
+    
 
-        self.robot = Robot(self.drive, self.radio, self.arduino)
+        self.robot = Robot(self.drive, self.radio, self.arduino, self.imu)
 
         for i in range(8):
-            self.drive.tank_drive(0, 0, TEST_SCALE)
+            #self.drive.tank_drive(0, 0, TEST_SCALE)
+            self.drive.tank_drive_imu_orientation(0.0)
 
 ####### STOPPING BOAT #######
     def stop(self):
@@ -132,6 +135,15 @@ class ManualTest:
         self.drive.tank_drive(0, 0, scale)
         time.sleep(3)
 
+
+    def turn_test(self):
+        #turn_right_test() and turn_left_test()
+        for y in range(10):
+            scale = (y+1)/10
+            for x in range(1, 5):
+                self.turn_right_test(x, scale)
+                self.turn_left_test(x, scale)
+
     def hard_turn_right(self, duration=DURATION, scale=TEST_SCALE):
         self.drive.tank_drive(0, 0, scale)
         time.sleep(duration)
@@ -140,6 +152,7 @@ class ManualTest:
             x = i / 10
             self.drive.tank_drive(1,-1,x)
             time.sleep(duration)
+
 
     def hard_turn_left(self, duration=DURATION, scale=TEST_SCALE):
         self.drive.tank_drive(0, 0, scale)
@@ -150,13 +163,17 @@ class ManualTest:
             self.drive.tank_drive(-1,1,x)
             time.sleep(duration)
 
-    def turn_test(self):
-        #turn_right_test() and turn_left_test()
-        for y in range(10):
-            scale = (y+1)/10
-            for x in range(1, 5):
-                self.turnrighttest(x, scale)
-                self.turnlefttest(x, scale)
+
+    def ast(self, desiredVelocity=DESIRED_VELOCITY, scale=SCALE, duration=DURATION):
+        self.drive.tank_drive(0, 0, scale)
+        time.sleep(duration)
+        for _ in range(500):
+            self.drive.tank_drive2(desiredVelocity)
+            time.sleep(.05)
+
+        self.drive.tank_drive(0, 0, 0)
+
+    
 
     def skrt(self, duration=DURATION, scale=TEST_SCALE, turntime=TURNTIME):
         self.drive.tank_drive(0,0,0)
@@ -206,6 +223,15 @@ class ManualTest:
         self.drive.tank_drive(0, 1, .2)
         time.sleep(2)
         self.drive.tank_drive(0,0,0)
+
+    def imu_angle_test(self, desiredVelocity=DESIRED_VELOCITY, scale=SCALE, duration=DURATION):
+        self.drive.tank_drive_imu_orientation(0)
+        time.sleep(duration)
+        for _ in range(500):
+            self.drive.tank_drive_imu_orientation(desiredVelocity)
+            time.sleep(.25)
+
+        self.drive.tank_drive_imu_orientation(0)
 #class LogTest():
 #
 #    def __init__(self, test_name, initial_data=None):
