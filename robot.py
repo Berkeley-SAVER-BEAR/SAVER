@@ -1,13 +1,13 @@
-from models import Drive, KerberosSDR, Arduino, Imu
+from models import Drive, KerberosSDR, Arduino
 import math
 from constants import *
 
 class Robot:
-    def __init__(self, drive: Drive, radio: KerberosSDR, arduino: Arduino, imu: Imu):
+    def __init__(self, drive: Drive, radio: KerberosSDR, arduino: Arduino):
         self.drive = drive
         self.radio = radio
         self.arduino = arduino
-        self.imu = imu
+        #self.imu = imu
 
     def run(self, method="simple_drive"):
         #self.arduino.update()

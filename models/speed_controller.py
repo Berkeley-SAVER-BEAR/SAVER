@@ -1,13 +1,13 @@
   
 from .arduino import Arduino
-from .imu import Imu
+#from .imu import Imu
 from .kerberos_sdr import KerberosSDR
 
 class SpeedController:
 
     def __init__(self, arduino: Arduino):
         self.arduino = arduino
-        self.thisImu = Imu()
+        #self.thisImu = Imu()
         self.kerberos = KerberosSDR()
         # set dt to loop time.
         # D means derivative. xD means velocity. xDD means acceleration.
