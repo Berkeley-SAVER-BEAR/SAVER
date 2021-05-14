@@ -1,53 +1,47 @@
 #include <Servo.h>
-
-// For ESC
 byte servoPin = 9;
+byte servoPin1 = 5;
 Servo servo;
+Servo servo1;
 
 void setup() {
   // Initialize Serial communication to see printed values
   Serial.begin(9600);
 
   servo.attach(servoPin);
+  servo1.attach(servoPin1);
 
   servo.writeMicroseconds(1500); // send "stop" signal to ESC (Electronic Speed Controller).
+  servo1.writeMicroseconds(1500);
 
   delay(7000); // delay to allow the ESC to recognize the stopped signal
 }
 
-void loop() {
-  // test ESC
-  // Set signal value, which should be between 1100 (max reverse) and 1900 (max forward)
-  // int signal = 1100;
-  // for (int i = signal; i <= 1900; i+= 100) {
-  //   Serial.println("PWM Value" + signal)
-    
-  //   // Send signal to ESC.
-  //   servo.writeMicroseconds(i);
-    
-  //   // delay for 10 seconds to test
-  //   delay(10000);
-  // }
 
-  // Read data from Pi
+void loop() {
   if (Serial.available() > 0) {
     String data = Serial.readStringUntil('\n');
-    Serial.print("Pi to arduino: ");
-    Serial.println(data);
-    
-    // Handle message from Pi
-    parseMessage(data);
-  }
-}
+    int servoVal = data[0] - 48;
 
-void parseMessage(String data) {
-  if data.starts("ESC") {
-    int index = data.indexOf("PWM");
-    // Extract PWM value from message
-    int PWM = data.substring(index + 5).toInt()
-    // Send PWM to ESC
-    Serial.print("PWM: ")
-    Serial.println(PWM)
-    servo.writeMicroseconds(PWM)
+    int pwmVal = 0;
+    for (int i = 1; i < data.length(); i++) {
+      if (data[i] == '.') {
+        break;
+      }
+      pwmVal = pwmVal * 10 + (data.charAt(i) - 48); 
+    }
+    
+    if (servoVal == 0) {
+      servo.writeMicroseconds(pwmVal);
+    } else {
+      servo1.writeMicroseconds(pwmVal);
+    }
+   
+    Serial.println("Port: " + String(servoVal) + " PWM: " + String(pwmVal));
+    Serial.println(" ");
+
+    // delay for 3 seconds to test
+    //delay(3000);
+    
   }
 }

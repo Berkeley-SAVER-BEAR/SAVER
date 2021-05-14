@@ -19,7 +19,7 @@ class ManualTest:
         self.radio = KerberosSDR()
     
 
-        self.robot = Robot(self.drive, self.radio, self.arduino, self.imu)
+        self.robot = Robot(self.drive, self.radio, self.arduino)
 
         for i in range(8):
             #self.drive.tank_drive(0, 0, TEST_SCALE)
@@ -232,22 +232,4 @@ class ManualTest:
             time.sleep(.25)
 
         self.drive.tank_drive_imu_orientation(0)
-#class LogTest():
-#
-#    def __init__(self, test_name, initial_data=None):
-#        self.filename = test_name + time.time()
-#        self.add(initial_data)
-#
-#    def add(self, string):
-#        file = open("log/" + self.filename, 'a')
-#        file.write(string + "\n")
-#        file.close()
-#
-#    def print(self):
-#        file = open("log/" + self.filename, 'r')
-#        print(file.read())
-#
-#
-#EULER_SPIN_LOG = LogTest(
-#    "euler",
-#    "Testing to find which value of the tuple represents spin in the x-y plane")
+

@@ -1,5 +1,5 @@
 from robot import Robot
-from models import Arduino, Drive, KerberosSDR, SpeedController, Imu
+from models import Arduino, Drive, KerberosSDR, SpeedController
 from constants import *
 import time
 
@@ -7,10 +7,12 @@ def initialize():
     arduino = Arduino()
     thrusters = SpeedController(arduino)
     drive = Drive(thrusters)
-    imu = Imu()
+    #imu = Imu()
     radio = KerberosSDR()
+    for i in range(8):
+        drive.tank_drive(0, 0, 0)
 
-    return drive, radio, arduino, imu
+    return drive, radio, arduino
 
 def main():
     models = initialize()
@@ -21,7 +23,7 @@ def main():
     #time.sleep(2)
 
     while True:
-        robot.run()
+        robot.simple_drive(SCALE)
         time.sleep(1 / CYCLES_PER_SECOND)
         #time.sleep(3)
 
