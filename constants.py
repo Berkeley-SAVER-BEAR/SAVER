@@ -7,4 +7,4 @@ RIGHT_THRUSTER_PORT = 1 # TODO: update to correct value
 
 CYCLES_PER_SECOND = 2 # TODO: update to correct value
 
-SCALE = 0.1 #update as needed when testing
+SCALE = 0.25 #update as needed when testing

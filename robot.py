@@ -33,7 +33,7 @@ class Robot:
         else:
             self.drive.tank_drive(-1, 1)'''
 
-        degree = (round(int(self.radio.get_DOA()), 4) + 45) % 360
+        degree = (round(int(self.radio.get_DOA()), 4) - 45) % 360
         print("Kerberos Angle: ", degree)
         #degree = (round(self.manualtest._____, 4) + 45) %360
 
