@@ -7,4 +7,8 @@ class KerberosSDR:
 
     def get_DOA(self):
         doa_file = open(self.doa_fname, 'r')
-        return doa_file.read()
+        value = doa_file.read()
+        if value == "None":
+            return None
+        else:
+            return int(value)
