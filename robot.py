@@ -53,7 +53,7 @@ class Robot:
         elif degree <= 67.5:
             self.drive.tank_drive(1, 0.2473, scale)
         elif degree <= 180:
-            self.drive.tank_drive(0.5, 0, scale)
+            self.drive.tank_drive(0.5, -0.5, scale)
         elif degree >= 355:
             self.drive.tank_drive(0.9572, 1, scale)
         elif degree >= 350:
